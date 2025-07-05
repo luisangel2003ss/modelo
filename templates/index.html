@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe Interactivo: Predicción de Derrames de Petróleo</title>
+    <!-- Chosen Palette: Calm Harmony (Slate/Stone neutrals with a muted Blue accent) -->
+    <!-- Application Structure Plan: A single-page, vertical-scroll application with a fixed navigation sidebar. The structure follows a narrative flow: Summary/Dashboard -> Problem/Data -> Interactive Methodology -> Key Results -> Detailed Performance Explorer -> Conclusion. This was chosen to guide users from a high-level overview to technical details logically, making the complex machine learning report more digestible and engaging than a direct document translation. Key interactions include the interactive performance chart and methodology diagram. -->
+    <!-- Visualization & Content Choices:
+        - Summary: Abstract text + Key Metrics (R², Accuracy) as HTML stat cards. Goal: Inform quickly.
+        - Methodology: Interactive HTML/CSS diagram of the NN architecture. Goal: Organize/Explain. Interaction: Hover reveals details on layers.
+        - Regression Result: Scatter plot (Chart.js) of Real vs. Predicted values. Goal: Show Relationship.
+        - Classification Result: Donut chart (Chart.js) for cause distribution. Goal: Compare proportions.
+        - Model Performance: A single, interactive Line Chart (Chart.js) displaying training/validation metrics vs. epochs. Goal: Show Change/Compare. Interaction: Buttons switch the displayed metric (Loss, Accuracy, MAE) to avoid clutter and focus user attention.
+        - Future Work: HTML list with Unicode icons. Goal: Inform visually. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .nav-link {
+            transition: all 0.2s ease-in-out;
+            border-left: 3px solid transparent;
+        }
+        .nav-link.active {
+            border-left-color: #3b82f6;
+            color: #3b82f6;
+            background-color: #eff6ff;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            max-height: 40vh;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .stat-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        .method-step {
+            position: relative;
+            padding-left: 2.5rem;
+            padding-bottom: 2rem;
+            border-left: 2px solid #e5e7eb;
+        }
+        .method-step:last-child {
+            border-left: 2px solid transparent;
+            padding-bottom: 0;
+        }
+        .method-icon {
+            position: absolute;
+            left: -1rem;
+            top: 0;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            background-color: white;
+            border: 2px solid #e5e7eb;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #374151;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            font-size: 1rem;
+            transition: border-color 0.2s ease-in-out;
+        }
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        .predict-btn {
+            background-color: #3b82f6;
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 0.375rem;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .predict-btn:hover {
+            background-color: #2563eb;
+        }
+        .predict-btn:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+        }
+        .result-card {
+            background-color: #f0f9ff;
+            border: 1px solid #0ea5e9;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-700">
+
+    <div class="flex">
+        <!-- Sidebar Navigation -->
+        <aside class="sticky top-0 h-screen w-64 bg-white shadow-md hidden lg:block">
+            <div class="p-6">
+                <h2 class="text-xl font-bold text-slate-800">Menú del Informe</h2>
+            </div>
+            <nav id="nav-menu" class="flex flex-col px-3">
+                <a href="#summary" class="nav-link py-2 px-3 my-1 rounded-md font-medium text-slate-600 hover:bg-slate-100">Resumen y Métricas</a>
+                <a href="#methodology" class="nav-link py-2 px-3 my-1 rounded-md font-medium text-slate-600 hover:bg-slate-100">Metodología</a>
+                <a href="#results" class="nav-link py-2 px-3 my-1 rounded-md font-medium text-slate-600 hover:bg-slate-100">Resultados Clave</a>
+                <a href="#performance" class="nav-link py-2 px-3 my-1 rounded-md font-medium text-slate-600 hover:bg-slate-100">Rendimiento del Modelo</a>
+                <a href="#predictions" class="nav-link py-2 px-3 my-1 rounded-md font-medium text-slate-600 hover:bg-slate-100">Predicciones</a>
+                <a href="#conclusion" class="nav-link py-2 px-3 my-1 rounded-md font-medium text-slate-600 hover:bg-slate-100">Conclusiones</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="w-full p-4 md:p-10">
+            <div class="max-w-4xl mx-auto">
+                <header class="mb-12 text-center">
+                    <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-2">Predicción de Derrames en Pozos Petroleros</h1>
+                    <p class="text-xl text-slate-600">Un Vistazo Interactivo al Modelo Multitarea</p>
+                </header>
+
+                <!-- Section 1: Summary & Key Metrics -->
+                <section id="summary" class="mb-16">
+                    <h2 class="text-3xl font-bold text-slate-800 mb-6 pb-2 border-b-2 border-slate-200">Resumen y Métricas Clave</h2>
+                    <p class="mb-8 text-lg text-slate-600">
+                        Esta aplicación presenta un modelo de red neuronal diseñado para una doble tarea: predecir el <strong>volumen de agua derramada</strong> (regresión) y su <strong>causa probable</strong> (clasificación). Mediante la optimización automática con Optuna, el modelo logra un rendimiento prometedor, demostrando el potencial de los enfoques multitarea en contextos industriales complejos. A continuación se presentan los resultados finales más importantes.
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-center">
+                        <div class="stat-card">
+                            <p class="text-sm font-medium text-slate-500">Coeficiente R² (Volumen)</p>
+                            <p id="r2-value" class="text-4xl font-bold text-blue-600">0.347</p>
+                        </div>
+                        <div class="stat-card">
+                            <p class="text-sm font-medium text-slate-500">Precisión (Causa)</p>
+                            <p id="accuracy-value" class="text-4xl font-bold text-blue-600">49.8%</p>
+                        </div>
+                        <div class="stat-card">
+                            <p class="text-sm font-medium text-slate-500">Error Absoluto Medio</p>
+                            <p id="mae-value" class="text-4xl font-bold text-blue-600">1.279</p>
+                        </div>
+                        <div class="stat-card">
+                            <p class="text-sm font-medium text-slate-500">Error Cuadrático Medio</p>
+                            <p id="mse-value" class="text-4xl font-bold text-blue-600">2.764</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 2: Methodology -->
+                <section id="methodology" class="mb-16">
+                    <h2 class="text-3xl font-bold text-slate-800 mb-6 pb-2 border-b-2 border-slate-200">Metodología Interactiva</h2>
+                    <p class="mb-8 text-lg text-slate-600">El modelo fue construido siguiendo un flujo de trabajo automatizado que va desde el preprocesamiento de los datos hasta la optimización de la arquitectura de la red neuronal. Este enfoque asegura la reproducibilidad y facilita la mejora continua del sistema.</p>
+                    <div>
+                        <div class="method-step">
+                            <div class="method-icon">📊</div>
+                            <h3 class="text-xl font-bold text-slate-800 mb-2">1. Preprocesamiento de Datos</h3>
+                            <p>Se utilizó un conjunto de datos real de derrames. Las variables categóricas (operador, condado, causa, etc.) fueron transformadas con <code>OneHotEncoder</code>, mientras que a la variable objetivo de volumen se le aplicó una transformación logarítmica para estabilizar la varianza.</p>
+                        </div>
+                        <div class="method-step">
+                            <div class="method-icon">🧠</div>
+                            <h3 class="text-xl font-bold text-slate-800 mb-2">2. Modelo de Red Neuronal Multitarea</h3>
+                            <p>El núcleo del sistema es una red neuronal con capas compartidas que aprenden características comunes de los datos. El modelo se bifurca en dos salidas especializadas:</p>
+                            <ul class="list-disc list-inside mt-2 space-y-1">
+                                <li><strong class="text-blue-600">Salida de Regresión:</strong> Una capa densa con activación lineal para predecir el volumen del derrame.</li>
+                                <li><strong class="text-blue-600">Salida de Clasificación:</strong> Una capa densa con activación Softmax para predecir la probabilidad de cada causa posible.</li>
+                            </ul>
+                        </div>
+                        <div class="method-step">
+                            <div class="method-icon">⚙️</div>
+                            <h3 class="text-xl font-bold text-slate-800 mb-2">3. Optimización con Optuna</h3>
+                            <p>Para encontrar la mejor configuración, se usó <strong>Optuna</strong>, un framework de optimización bayesiana que ajustó automáticamente los siguientes hiperparámetros clave para minimizar la pérdida combinada del modelo:</p>
+                            <p class="font-mono text-sm bg-slate-100 p-3 rounded-md mt-2">Capas, Neuronas, Dropout, Regularización L2, Tasa de Aprendizaje, Optimizador, Tamaño de Lote.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 3: Key Results -->
+                <section id="results" class="mb-16">
+                    <h2 class="text-3xl font-bold text-slate-800 mb-6 pb-2 border-b-2 border-slate-200">Resultados Clave</h2>
+                     <p class="mb-8 text-lg text-slate-600">
+                        Los gráficos a continuación visualizan el rendimiento del modelo en sus dos tareas principales. El gráfico de dispersión muestra la correlación entre los volúmenes reales y predichos, mientras que el gráfico de dona compara la distribución de las causas reales frente a las predichas para una muestra de los datos de prueba.
+                    </p>
+                    <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+                        <div class="lg:col-span-3 bg-white p-4 rounded-lg shadow">
+                             <h3 class="text-xl font-bold text-slate-800 mb-2 text-center">Predicción de Volumen (Regresión)</h3>
+                            <div class="chart-container">
+                                <canvas id="regressionChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-2 bg-white p-4 rounded-lg shadow">
+                             <h3 class="text-xl font-bold text-slate-800 mb-2 text-center">Predicción de Causa (Clasificación)</h3>
+                            <div class="chart-container">
+                                <canvas id="classificationChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 4: Model Performance -->
+                <section id="performance" class="mb-16">
+                    <h2 class="text-3xl font-bold text-slate-800 mb-6 pb-2 border-b-2 border-slate-200">Explorador de Rendimiento del Modelo</h2>
+                    <p class="mb-6 text-lg text-slate-600">
+                        El entrenamiento de un modelo de aprendizaje profundo es un proceso iterativo. A continuación, puedes explorar cómo evolucionaron las métricas clave a lo largo de las épocas de entrenamiento, tanto para los datos de entrenamiento como para los de validación. Selecciona una métrica para visualizar su comportamiento.
+                    </p>
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <div class="flex flex-wrap justify-center gap-2 mb-4">
+                            <button onclick="updatePerformanceChart('loss')" class="perf-btn bg-blue-500 text-white py-2 px-4 rounded-md">Pérdida Total</button>
+                            <button onclick="updatePerformanceChart('accuracy')" class="perf-btn bg-slate-200 text-slate-700 py-2 px-4 rounded-md">Precisión (Clasif.)</button>
+                            <button onclick="updatePerformanceChart('mae')" class="perf-btn bg-slate-200 text-slate-700 py-2 px-4 rounded-md">MAE (Reg.)</button>
+                            <button onclick="updatePerformanceChart('cls_loss')" class="perf-btn bg-slate-200 text-slate-700 py-2 px-4 rounded-md">Pérdida (Clasif.)</button>
+                            <button onclick="updatePerformanceChart('reg_loss')" class="perf-btn bg-slate-200 text-slate-700 py-2 px-4 rounded-md">Pérdida (Reg.)</button>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="performanceChart"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 5: Predictions Form -->
+                <section id="predictions" class="mb-16">
+                    <h2 class="text-3xl font-bold text-slate-800 mb-6 pb-2 border-b-2 border-slate-200">Predicciones</h2>
+                    <p class="mb-8 text-lg text-slate-600">
+                        Utiliza el formulario a continuación para realizar predicciones personalizadas con el modelo entrenado. Ingresa los datos del escenario que deseas evaluar y obtén una estimación del volumen de derrame y la causa más probable.
+                    </p>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <form id="predictionForm">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="form-group">
+                                    <label for="year">Año:</label>
+                                    <input type="number" id="year" name="year" min="2000" max="2030" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="month">Mes:</label>
+                                    <select id="month" name="month" required>
+                                        <option value="">Seleccione un mes</option>
+                                        <option value="1">Enero</option>
+                                        <option value="2">Febrero</option>
+                                        <option value="3">Marzo</option>
+                                        <option value="4">Abril</option>
+                                        <option value="5">Mayo</option>
+                                        <option value="6">Junio</option>
+                                        <option value="7">Julio</option>
+                                        <option value="8">Agosto</option>
+                                        <option value="9">Septiembre</option>
+                                        <option value="10">Octubre</option>
+                                        <option value="11">Noviembre</option>
+                                        <option value="12">Diciembre</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="operator">Operador:</label>
+                                    <input type="text" id="operator" name="operator" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="county">Condado:</label>
+                                    <select id="county" name="county" required>
+                                        <option value="">Seleccione un condado</option>
+                                        <option value="Midland">Midland</option>
+                                        <option value="Ector">Ector</option>
+                                        <option value="Reeves">Reeves</option>
+                                        <option value="Andrews">Andrews</option>
+                                        <option value="Crane">Crane</option>
+                                        <option value="Upton">Upton</option>
+                                        <option value="Ward">Ward</option>
+                                        <option value="Winkler">Winkler</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="operation">Tipo de operación:</label>
+                                    <select id="operation" name="operation" required>
+                                        <option value="">Seleccione una operación</option>
+                                        <option value="Drilling">Perforación</option>
+                                        <option value="Completion">Completación</option>
+                                        <option value="Production">Producción</option>
+                                        <option value="Workover">Reacondicionamiento</option>
+                                        <option value="Stimulation">Estimulación</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="source">Fuente:</label>
+                                    <select id="source" name="source" required>
+                                        <option value="">Seleccione una fuente</option>
+                                        <option value="Tank">Tanque</option>
+                                        <option value="Pipeline">Oleoducto</option>
+                                        <option value="Wellhead">Cabezal de pozo</option>
+                                        <option value="Separator">Separador</option>
+                                        <option value="Pump">Bomba</option>
+                                        <option value="Valve">Válvula</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6 text-center">
+                                <button type="submit" class="predict-btn">
+                                    <span id="btnText">Predecir</span>
+                                    <span id="btnLoading" class="hidden">Procesando...</span>
+                                </button>
+                            </div>
+                        </form>
+
+                        <div id="predictionResult" class="hidden result-card">
+                            <h3 class="text-xl font-bold text-slate-800 mb-4">Resultado de la Predicción</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <p class="text-sm font-medium text-slate-500">Volumen estimado:</p>
+                                    <p id="volumeResult" class="text-2xl font-bold text-blue-600"></p>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium text-slate-500">Causa probable:</p>
+                                    <p id="causeResult" class="text-2xl font-bold text-blue-600"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 6: Conclusion & Future Work -->
+                <section id="conclusion" class="mb-16">
+                    <h2 class="text-3xl font-bold text-slate-800 mb-6 pb-2 border-b-2 border-slate-200">Conclusiones y Trabajos Futuros</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                             <h3 class="text-xl font-bold text-slate-800 mb-2">Conclusiones</h3>
+                            <p>El modelo multitarea desarrollado muestra capacidades prácticas para predecir tanto el volumen de derrames como su causa. La optimización con Optuna fue fundamental para alcanzar un equilibrio adecuado entre ambas tareas. Además, se construyó un sistema que puede evolucionar automáticamente mediante la comparación y almacenamiento de resultados, sentando las bases para una herramienta de monitoreo robusta y adaptable.</p>
+                        </div>
+                        <div>
+                             <h3 class="text-xl font-bold text-slate-800 mb-2">Trabajos Futuros</h3>
+                             <ul class="space-y-3">
+                                <li class="flex items-center"><span class="mr-3 text-xl">🗺️</span> Integrar datos geoespaciales y temporales (LSTM o Transformers).</li>
+                                <li class="flex items-center"><span class="mr-3 text-xl">🚀</span> Aplicar técnicas de aprendizaje por transferencia (Transfer Learning).</li>
+                                <li class="flex items-center"><span class="mr-3 text-xl">🎯</span> Evaluar métricas específicas para clasificación multiclase desequilibrada.</li>
+                                <li class="flex items-center"><span class="mr-3 text-xl">📈</span> Implementar dashboards para visualización en tiempo real.</li>
+                             </ul>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            const finalMetrics = {
+                r2: 0.3465,
+                accuracy: 0.4976,
+                mae: 1.279,
+                mse: 2.7643
+            };
+
+            const trainingHistory = {
+                epochs: [1, 6, 11, 16, 21, 27],
+                loss: [62.28, 7.27, 5.64, 4.97, 4.53, 4.24],
+                val_loss: [45.14, 4.81, 4.62, 4.60, 4.66, 4.70],
+                accuracy: [0.07, 0.47, 0.48, 0.49, 0.50, 0.50],
+                val_accuracy: [0.01, 0.49, 0.50, 0.50, 0.50, 0.50],
+                mae: [7.17, 1.86, 1.58, 1.44, 1.34, 1.28],
+                val_mae: [6.00, 1.38, 1.33, 1.33, 1.33, 1.34],
+                cls_loss: [5.43, 1.80, 1.65, 1.61, 1.58, 1.56],
+                val_cls_loss: [5.08, 1.65, 1.64, 1.63, 1.65, 1.64],
+                reg_loss: [56.80, 5.45, 3.98, 3.36, 2.94, 2.67],
+                val_reg_loss: [40.06, 3.15, 2.97, 2.95, 3.00, 3.04],
+            };
+            
+            const samplePredictions = {
+                real_volume: [8.93, 8.81, 8.90, 9.04, 10.71],
+                pred_volume: [8.43, 8.86, 8.24, 8.56, 7.82],
+                real_cause: ['MECHANICAL FAILURE', 'MECHANICAL FAILURE', 'MECHANICAL FAILURE', 'HUMAN ERROR', 'CORROSION'],
+                pred_cause: ['MECHANICAL FAILURE', 'MECHANICAL FAILURE', 'MECHANICAL FAILURE', 'MECHANICAL FAILURE', 'CORROSION'],
+            };
+            
+            // --- Populate Stat Cards ---
+            document.getElementById('r2-value').textContent = finalMetrics.r2.toFixed(3);
+            document.getElementById('accuracy-value').textContent = (finalMetrics.accuracy * 100).toFixed(1) + '%';
+            document.getElementById('mae-value').textContent = finalMetrics.mae.toFixed(3);
+            document.getElementById('mse-value').textContent = finalMetrics.mse.toFixed(3);
+
+            // --- Chart: Regression ---
+            const regressionCtx = document.getElementById('regressionChart').getContext('2d');
+            const regressionDataPoints = samplePredictions.real_volume.map((val, i) => ({
+                x: val,
+                y: samplePredictions.pred_volume[i]
+            }));
+            new Chart(regressionCtx, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Predicción vs. Real',
+                        data: regressionDataPoints,
+                        backgroundColor: 'rgba(59, 130, 246, 0.6)',
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        borderWidth: 1,
+                        pointRadius: 5,
+                        pointHoverRadius: 7
+                    }, {
+                        type: 'line',
+                        label: 'Línea Ideal (Y=X)',
+                        data: [{x: 6, y: 6}, {x: 11, y: 11}],
+                        borderColor: 'rgba(239, 68, 68, 0.8)',
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        pointRadius: 0,
+                        fill: false,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            title: { display: true, text: 'Volumen Real (Log)', font: { size: 14 } },
+                            min: 6, max: 11
+                        },
+                        y: {
+                            title: { display: true, text: 'Volumen Predicho (Log)', font: { size: 14 } },
+                             min: 6, max: 11
+                        }
+                    },
+                    plugins: {
+                        legend: { position: 'top' },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `Real: ${context.parsed.x.toFixed(2)}, Predicho: ${context.parsed.y.toFixed(2)}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // --- Chart: Classification ---
+            const classificationCtx = document.getElementById('classificationChart').getContext('2d');
+            const realCausesCount = samplePredictions.real_cause.reduce((acc, cause) => {
+                acc[cause] = (acc[cause] || 0) + 1;
+                return acc;
+            }, {});
+            new Chart(classificationCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(realCausesCount),
+                    datasets: [{
+                        label: 'Distribución de Causas Reales',
+                        data: Object.values(realCausesCount),
+                        backgroundColor: ['#3b82f6', '#10b981', '#f97316'],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 15,
+                                font: { size: 12 }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Distribución de Causas (Muestra de Prueba)',
+                            padding: { bottom: 15 },
+                            font: { size: 14 }
+                        }
+                    }
+                }
+            });
+            
+            // --- Chart: Performance Explorer ---
+            const performanceCtx = document.getElementById('performanceChart').getContext('2d');
+            const performanceChart = new Chart(performanceCtx, {
+                type: 'line',
+                data: {},
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { title: { display: true, text: 'Época' } },
+                        y: { title: { display: true, text: 'Valor' } }
+                    },
+                    plugins: { legend: { position: 'top' } },
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                }
+            });
+
+            const chartDataConfig = {
+                loss: {
+                    label: 'Pérdida Total',
+                    trainData: trainingHistory.loss,
+                    valData: trainingHistory.val_loss
+                },
+                accuracy: {
+                    label: 'Precisión',
+                    trainData: trainingHistory.accuracy,
+                    valData: trainingHistory.val_accuracy
+                },
+                mae: {
+                    label: 'MAE Regresión',
+                    trainData: trainingHistory.mae,
+                    valData: trainingHistory.val_mae
+                },
+                 cls_loss: {
+                    label: 'Pérdida Clasificación',
+                    trainData: trainingHistory.cls_loss,
+                    valData: trainingHistory.val_cls_loss
+                },
+                 reg_loss: {
+                    label: 'Pérdida Regresión',
+                    trainData: trainingHistory.reg_loss,
+                    valData: trainingHistory.val_reg_loss
+                },
+            };
+
+            window.updatePerformanceChart = function(metric) {
+                const config = chartDataConfig[metric];
+                performanceChart.data = {
+                    labels: trainingHistory.epochs,
+                    datasets: [
+                        {
+                            label: `Entrenamiento - ${config.label}`,
+                            data: config.trainData,
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            fill: true,
+                            tension: 0.3,
+                        },
+                        {
+                            label: `Validación - ${config.label}`,
+                            data: config.valData,
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            fill: true,
+                            tension: 0.3,
+                        }
+                    ]
+                };
+                performanceChart.options.scales.y.title.text = config.label;
+                performanceChart.update();
+
+                document.querySelectorAll('.perf-btn').forEach(btn => {
+                    btn.classList.remove('bg-blue-500', 'text-white');
+                    btn.classList.add('bg-slate-200', 'text-slate-700');
+                });
+                const activeButton = document.querySelector(`button[onclick="updatePerformanceChart('${metric}')"]`);
+                activeButton.classList.add('bg-blue-500', 'text-white');
+                activeButton.classList.remove('bg-slate-200', 'text-slate-700');
+            }
+            
+            updatePerformanceChart('loss');
+
+            // --- Scrollspy for navigation ---
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('#nav-menu a');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href').substring(1) === entry.target.id);
+                        });
+                    }
+                });
+            }, { rootMargin: '-50% 0px -50% 0px' });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
