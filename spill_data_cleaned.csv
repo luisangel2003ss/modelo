@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 date_of_spill_edit;operator_edit;lease_facility_name;county_edit;type_operation;source;probable_cause_edit;release_crude_oil_edit;release_prod_water_edit;recovery_crude_oil_edit;recovery_prod_water_edit;spill_on_water_edit
 2013-01-01;APACHE;Walker Glass;Glasscock;PRODUCTION;TANK;MECHANICAL FAILURE;1092;1260;882;1218;NO
 2013-01-02;CLIMAREX ENERGY;Mendota Ranch 63, #5;Roberts;PRODUCTION;TANK;WEATHER;0;2436;3360;0;NO
@@ -10381,4 +10379,3 @@ date_of_spill_edit;operator_edit;lease_facility_name;county_edit;type_operation;
 ;;;;;;;;;;;
 ;;;;;;;;;;;
 ;;;;;;;;;;;
->>>>>>> 53ef6a7d1e9a925d6f80240ad27dccc689260d39
