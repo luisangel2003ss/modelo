@@ -167,6 +167,21 @@
         color: #6b7280;
         margin-bottom: 0.5rem;
       }
+      #chartContainer {
+        max-width: auto;           
+        margin: auto;
+        display: flex;
+        justify-content: center;
+      }
+
+        #performanceChart {
+        display: block;
+        margin: auto;
+        width: 600px;
+        max-width: 1000px;
+        height: auto !important;
+      }
+
     </style>
   </head>
   <body class="bg-slate-50 text-slate-700">
@@ -216,12 +231,14 @@
                     <p class="section-content mb-4 text-lg">
                         El agua producida representa riesgos ambientales y de salud significativos cuando no se gestiona adecuadamente. En Texas, se reportaron más de 10,000 derrames totalizando más de 148 millones de galones entre 2013 y 2022; solo alrededor del 40% de ese volumen fue recuperado, dejando el resto para impactar el suelo, el agua y los ecosistemas. El agua producida puede contener toxinas como benceno, metales pesados, radio y salinidad elevada, que se han relacionado con la degradación del suelo, la pérdida de vegetación, la mortalidad de la vida silvestre y la contaminación de acuíferos.
                     </p>
-                    <div class="figure">
-                        <p>Figura 1: Visualización geográfica de derrames de agua producida en Texas usando QGIS.</p>
-                        <div class="bg-slate-100 h-48 flex items-center justify-center rounded-md">
-                            <img src="/img/mapa.png" alt="Figura 1: Mapa Derrames" class="h-full object-contain" />
+                    <div class="figure max-w-3xl mx-auto">
+                        <p class="text-center">Figura 1: Visualización geográfica de derrames de agua producida en Texas usando QGIS.</p>
+                        <div class="bg-slate-100 flex items-center justify-center rounded-md p-2">
+                            <img src="/img/mapa.png" alt="Figura 1: Mapa Derrames" class="max-w-full h-auto rounded" />
                         </div>
                     </div>
+                </section>
+
 
                 </section>
 
@@ -328,9 +345,9 @@
                         </p>
                         
                         <!-- Pérdida Total -->
-                        <div class="mb-8">
+                        <div class="mb-8 max-w-3xl mx-auto">
                             <h4 class="text-lg font-bold text-slate-800 mb-4">Pérdida Total</h4>
-                            <table class="data-table">
+                            <table class="data-table w-full">
                                 <thead>
                                     <tr>
                                         <th>Época</th>
@@ -340,63 +357,29 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>62.2842</td>
-                                        <td>45.1358</td>
-                                        <td>17.1484</td>
-                                    </tr>
-                                    <tr>
-                                        <td>6</td>
-                                        <td>7.2674</td>
-                                        <td>4.8145</td>
-                                        <td>2.4529</td>
-                                    </tr>
-                                    <tr>
-                                        <td>11</td>
-                                        <td>5.6395</td>
-                                        <td>4.6213</td>
-                                        <td>1.0182</td>
-                                    </tr>
-                                    <tr>
-                                        <td>16</td>
-                                        <td>4.9681</td>
-                                        <td>4.6037</td>
-                                        <td>0.3645</td>
-                                    </tr>
-                                    <tr>
-                                        <td>21</td>
-                                        <td>4.5250</td>
-                                        <td>4.6631</td>
-                                        <td>0.1382</td>
-                                    </tr>
-                                    <tr>
-                                        <td>26</td>
-                                        <td>4.3510</td>
-                                        <td>4.6861</td>
-                                        <td>0.3352</td>
-                                    </tr>
-                                    <tr>
-                                        <td>27</td>
-                                        <td>4.2380</td>
-                                        <td>4.7025</td>
-                                        <td>0.4644</td>
-                                    </tr>
+                                    <tr><td>1</td><td>62.2842</td><td>45.1358</td><td>17.1484</td></tr>
+                                    <tr><td>6</td><td>7.2674</td><td>4.8145</td><td>2.4529</td></tr>
+                                    <tr><td>11</td><td>5.6395</td><td>4.6213</td><td>1.0182</td></tr>
+                                    <tr><td>16</td><td>4.9681</td><td>4.6037</td><td>0.3645</td></tr>
+                                    <tr><td>21</td><td>4.5250</td><td>4.6631</td><td>0.1382</td></tr>
+                                    <tr><td>26</td><td>4.3510</td><td>4.6861</td><td>0.3352</td></tr>
+                                    <tr><td>27</td><td>4.2380</td><td>4.7025</td><td>0.4644</td></tr>
                                 </tbody>
                             </table>
-                            <div class="figure">
-                                <p>Figura 2: Pérdida total de entrenamiento y validación por época.</p>
-                                <div class="bg-slate-100 h-48 flex items-center justify-center rounded-md">
-                                    <img src="/img/perdidatotal.png" alt="Figura 2: Pérdida total" class="h-full object-contain" />
+
+                            <div class="figure mt-4">
+                                <p class="text-center">Figura 2: Pérdida total de entrenamiento y validación por época.</p>
+                                <div class="bg-slate-100 flex items-center justify-center rounded-md p-2">
+                                    <img src="/img/perdidatotal.png" alt="Figura 2: Pérdida total" class="max-w-full h-auto rounded" />
                                 </div>
                             </div>
-
                         </div>
 
+
                         <!-- Precisión de Clasificación -->
-                        <div class="mb-8">
+                        <div class="mb-8 max-w-3xl mx-auto">
                             <h4 class="text-lg font-bold text-slate-800 mb-4">Precisión de Clasificación</h4>
-                            <table class="data-table">
+                            <table class="data-table w-full">
                                 <thead>
                                     <tr>
                                         <th>Época</th>
@@ -406,63 +389,29 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>0.0726</td>
-                                        <td>0.0145</td>
-                                        <td>0.0581</td>
-                                    </tr>
-                                    <tr>
-                                        <td>6</td>
-                                        <td>0.4658</td>
-                                        <td>0.4939</td>
-                                        <td>0.0281</td>
-                                    </tr>
-                                    <tr>
-                                        <td>11</td>
-                                        <td>0.4837</td>
-                                        <td>0.4982</td>
-                                        <td>0.0145</td>
-                                    </tr>
-                                    <tr>
-                                        <td>16</td>
-                                        <td>0.4930</td>
-                                        <td>0.5012</td>
-                                        <td>0.0082</td>
-                                    </tr>
-                                    <tr>
-                                        <td>21</td>
-                                        <td>0.4988</td>
-                                        <td>0.4952</td>
-                                        <td>0.0036</td>
-                                    </tr>
-                                    <tr>
-                                        <td>26</td>
-                                        <td>0.4989</td>
-                                        <td>0.5024</td>
-                                        <td>0.0035</td>
-                                    </tr>
-                                    <tr>
-                                        <td>27</td>
-                                        <td>0.5032</td>
-                                        <td>0.5036</td>
-                                        <td>0.0005</td>
-                                    </tr>
+                                    <tr><td>1</td><td>0.0726</td><td>0.0145</td><td>0.0581</td></tr>
+                                    <tr><td>6</td><td>0.4658</td><td>0.4939</td><td>0.0281</td></tr>
+                                    <tr><td>11</td><td>0.4837</td><td>0.4982</td><td>0.0145</td></tr>
+                                    <tr><td>16</td><td>0.4930</td><td>0.5012</td><td>0.0082</td></tr>
+                                    <tr><td>21</td><td>0.4988</td><td>0.4952</td><td>0.0036</td></tr>
+                                    <tr><td>26</td><td>0.4989</td><td>0.5024</td><td>0.0035</td></tr>
+                                    <tr><td>27</td><td>0.5032</td><td>0.5036</td><td>0.0005</td></tr>
                                 </tbody>
                             </table>
-                            <div class="figure">
-                                <p>Figura 3: Precisión de clasificación de entrenamiento y validación por época.</p>
-                                <div class="bg-slate-100 h-48 flex items-center justify-center rounded-md">
-                                    <img src="/img/accuracy.png" alt="Figura 3: Precision" class="h-full object-contain" />
+
+                            <div class="figure mt-4">
+                                <p class="text-center">Figura 3: Precisión de clasificación de entrenamiento y validación por época.</p>
+                                <div class="bg-slate-100 flex items-center justify-center rounded-md p-2">
+                                    <img src="/img/accuracy.png" alt="Figura 3: Precisión" class="max-w-full h-auto rounded" />
                                 </div>
                             </div>
-
                         </div>
 
+
                         <!-- MAE de Regresión -->
-                        <div class="mb-8">
+                        <div class="mb-8 max-w-3xl mx-auto">
                             <h4 class="text-lg font-bold text-slate-800 mb-4">MAE de Regresión (Error Absoluto Medio)</h4>
-                            <table class="data-table">
+                            <table class="data-table w-full">
                                 <thead>
                                     <tr>
                                         <th>Época</th>
@@ -472,58 +421,24 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>7.1658</td>
-                                        <td>6.0034</td>
-                                        <td>1.1624</td>
-                                    </tr>
-                                    <tr>
-                                        <td>6</td>
-                                        <td>1.8600</td>
-                                        <td>1.3799</td>
-                                        <td>0.4801</td>
-                                    </tr>
-                                    <tr>
-                                        <td>11</td>
-                                        <td>1.5793</td>
-                                        <td>1.3305</td>
-                                        <td>0.2488</td>
-                                    </tr>
-                                    <tr>
-                                        <td>16</td>
-                                        <td>1.4395</td>
-                                        <td>1.3250</td>
-                                        <td>0.1146</td>
-                                    </tr>
-                                    <tr>
-                                        <td>21</td>
-                                        <td>1.3427</td>
-                                        <td>1.3326</td>
-                                        <td>0.0102</td>
-                                    </tr>
-                                    <tr>
-                                        <td>26</td>
-                                        <td>1.3003</td>
-                                        <td>1.3313</td>
-                                        <td>0.0310</td>
-                                    </tr>
-                                    <tr>
-                                        <td>27</td>
-                                        <td>1.2843</td>
-                                        <td>1.3365</td>
-                                        <td>0.0522</td>
-                                    </tr>
+                                    <tr><td>1</td><td>7.1658</td><td>6.0034</td><td>1.1624</td></tr>
+                                    <tr><td>6</td><td>1.8600</td><td>1.3799</td><td>0.4801</td></tr>
+                                    <tr><td>11</td><td>1.5793</td><td>1.3305</td><td>0.2488</td></tr>
+                                    <tr><td>16</td><td>1.4395</td><td>1.3250</td><td>0.1146</td></tr>
+                                    <tr><td>21</td><td>1.3427</td><td>1.3326</td><td>0.0102</td></tr>
+                                    <tr><td>26</td><td>1.3003</td><td>1.3313</td><td>0.0310</td></tr>
+                                    <tr><td>27</td><td>1.2843</td><td>1.3365</td><td>0.0522</td></tr>
                                 </tbody>
                             </table>
-                            <div class="figure">
-                                <p>Figura 4: MAE de regresión de entrenamiento y validación por época.</p>
-                                <div class="bg-slate-100 h-48 flex items-center justify-center rounded-md">
-                                    <img src="/img/maeregresion.png" alt="Figura 4:MAE" class="h-full object-contain" />
+
+                            <div class="figure mt-4">
+                                <p class="text-center">Figura 4: MAE de regresión de entrenamiento y validación por época.</p>
+                                <div class="bg-slate-100 flex items-center justify-center rounded-md p-2">
+                                    <img src="/img/maeregresion.png" alt="Figura 4: MAE" class="max-w-full h-auto rounded" />
                                 </div>
                             </div>
-
                         </div>
+
 
                         <!-- MSE de Regresión -->
                         <div class="mb-8">
@@ -651,102 +566,102 @@
         </main>
     </div>
 
-    <!-- Script Chart.js -->
-    <script defer>
-        const lossData = {
-        labels: [1, 6, 11, 16, 21, 26, 27],
-        datasets: [
-            {
-            label: 'Pérdida de Entrenamiento',
-            data: [62.2842, 7.2674, 5.6395, 4.9681, 4.5250, 4.3510, 4.2380],
-            borderColor: '#3b82f6', fill: false, tension: 0.3
+        <!-- Script Chart.js -->
+        <script defer>
+            const lossData = {
+            labels: [1, 6, 11, 16, 21, 26, 27],
+            datasets: [
+                {
+                label: 'Pérdida de Entrenamiento',
+                data: [62.2842, 7.2674, 5.6395, 4.9681, 4.5250, 4.3510, 4.2380],
+                borderColor: '#3b82f6', fill: false, tension: 0.3
+                },
+                {
+                label: 'Pérdida de Validación',
+                data: [45.1358, 4.8145, 4.6213, 4.6037, 4.6631, 4.6861, 4.7025],
+                borderColor: '#f59e0b', fill: false, tension: 0.3
+                }
+            ]
+            };
+
+            const accuracyData = {
+            labels: [1, 6, 11, 16, 21, 26, 27],
+            datasets: [{
+                label: 'Precisión Validación',
+                data: [0.0145, 0.4939, 0.4982, 0.5012, 0.4952, 0.5024, 0.5036],
+                borderColor: '#10b981', fill: false, tension: 0.3
+            }]
+            };
+
+            const maeData = {
+            labels: [1, 6, 11, 16, 21, 26, 27],
+            datasets: [{
+                label: 'MAE Validación',
+                data: [6.0034, 1.3799, 1.3305, 1.3250, 1.3326, 1.3313, 1.3365],
+                borderColor: '#ef4444', fill: false, tension: 0.3
+            }]
+            };
+
+            const chartConfigs = {
+            loss: lossData,
+            accuracy: accuracyData,
+            mae: maeData
+            };
+
+            let performanceChart;
+            function updatePerformanceChart(metric) {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            if (performanceChart) performanceChart.destroy();
+            performanceChart = new Chart(ctx, {
+                type: 'line',
+                data: chartConfigs[metric],
+                options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' },
+                    title: { display: true, text: `Evolución de ${metric.toUpperCase()}` }
+                }
+                }
+            });
+            }
+
+            // Gráficas de Resultados Clave
+            new Chart(document.getElementById('regressionChart'), {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                label: 'Volumen Real vs Predicho',
+                data: [
+                    {x: 1.1, y: 1.2}, {x: 2.0, y: 2.1}, {x: 3.5, y: 3.4},
+                    {x: 4.0, y: 4.1}, {x: 5.0, y: 5.3}
+                ],
+                backgroundColor: '#3b82f6'
+                }]
             },
-            {
-            label: 'Pérdida de Validación',
-            data: [45.1358, 4.8145, 4.6213, 4.6037, 4.6631, 4.6861, 4.7025],
-            borderColor: '#f59e0b', fill: false, tension: 0.3
-            }
-        ]
-        };
-
-        const accuracyData = {
-        labels: [1, 6, 11, 16, 21, 26, 27],
-        datasets: [{
-            label: 'Precisión Validación',
-            data: [0.0145, 0.4939, 0.4982, 0.5012, 0.4952, 0.5024, 0.5036],
-            borderColor: '#10b981', fill: false, tension: 0.3
-        }]
-        };
-
-        const maeData = {
-        labels: [1, 6, 11, 16, 21, 26, 27],
-        datasets: [{
-            label: 'MAE Validación',
-            data: [6.0034, 1.3799, 1.3305, 1.3250, 1.3326, 1.3313, 1.3365],
-            borderColor: '#ef4444', fill: false, tension: 0.3
-        }]
-        };
-
-        const chartConfigs = {
-        loss: lossData,
-        accuracy: accuracyData,
-        mae: maeData
-        };
-
-        let performanceChart;
-        function updatePerformanceChart(metric) {
-        const ctx = document.getElementById('performanceChart').getContext('2d');
-        if (performanceChart) performanceChart.destroy();
-        performanceChart = new Chart(ctx, {
-            type: 'line',
-            data: chartConfigs[metric],
             options: {
-            responsive: true,
-            plugins: {
-                legend: { position: 'top' },
-                title: { display: true, text: `Evolución de ${metric.toUpperCase()}` }
+                scales: {
+                x: { title: { display: true, text: 'Volumen Real' } },
+                y: { title: { display: true, text: 'Volumen Predicho' } }
+                }
             }
-            }
-        });
-        }
+            });
 
-        // Gráficas de Resultados Clave
-        new Chart(document.getElementById('regressionChart'), {
-        type: 'scatter',
-        data: {
-            datasets: [{
-            label: 'Volumen Real vs Predicho',
-            data: [
-                {x: 1.1, y: 1.2}, {x: 2.0, y: 2.1}, {x: 3.5, y: 3.4},
-                {x: 4.0, y: 4.1}, {x: 5.0, y: 5.3}
-            ],
-            backgroundColor: '#3b82f6'
-            }]
-        },
-        options: {
-            scales: {
-            x: { title: { display: true, text: 'Volumen Real' } },
-            y: { title: { display: true, text: 'Volumen Predicho' } }
+            new Chart(document.getElementById('classificationChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Corrosión', 'Mecánico', 'Desconocido'],
+                datasets: [{
+                label: 'Distribución de Causas',
+                data: [45, 30, 25],
+                backgroundColor: ['#3b82f6', '#f59e0b', '#10b981']
+                }]
+            },
+            options: {
+                plugins: {
+                legend: { position: 'bottom' }
+                }
             }
-        }
-        });
-
-        new Chart(document.getElementById('classificationChart'), {
-        type: 'doughnut',
-        data: {
-            labels: ['Corrosión', 'Mecánico', 'Desconocido'],
-            datasets: [{
-            label: 'Distribución de Causas',
-            data: [45, 30, 25],
-            backgroundColor: ['#3b82f6', '#f59e0b', '#10b981']
-            }]
-        },
-        options: {
-            plugins: {
-            legend: { position: 'bottom' }
-            }
-        }
-        });
-    </script>
+            });
+        </script>
     </body>
 </html>

@@ -1,10 +1,16 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_from_directory
 import numpy as np
 import pandas as pd
 from tensorflow.keras.models import load_model
 import joblib
 from tensorflow.keras.losses import MeanSquaredError
-app = Flask(__name__)
+
+app = Flask(__name__)  # ✅ Mover esto arriba
+
+# Ruta para servir imágenes desde carpeta "img"
+@app.route('/img/<path:filename>')
+def custom_static(filename):
+    return send_from_directory('img', filename)
 
 # Cargar modelo y utilidades
 model = load_model("modelo_trained.h5", custom_objects={"mse": MeanSquaredError})
