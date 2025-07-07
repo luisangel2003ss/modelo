@@ -234,7 +234,7 @@
                     <div class="figure max-w-3xl mx-auto">
                         <p class="text-center">Figura 1: Visualización geográfica de derrames de agua producida en Texas usando QGIS.</p>
                         <div class="bg-slate-100 flex items-center justify-center rounded-md p-2">
-                            <img src="/img/mapa.png" alt="Figura 1: Mapa Derrames" class="max-w-full h-auto rounded" />
+                            <img src="img/mapa.png" alt="Figura 1: Mapa Derrames" class="max-w-full h-auto rounded" />
                         </div>
                     </div>
                 </section>
@@ -370,7 +370,7 @@
                             <div class="figure mt-4">
                                 <p class="text-center">Figura 2: Pérdida total de entrenamiento y validación por época.</p>
                                 <div class="bg-slate-100 flex items-center justify-center rounded-md p-2">
-                                    <img src="/img/perdidatotal.png" alt="Figura 2: Pérdida total" class="max-w-full h-auto rounded" />
+                                    <img src="img/perdidatotal.png" alt="Figura 2: Pérdida total" class="max-w-full h-auto rounded" />
                                 </div>
                             </div>
                         </div>
@@ -402,7 +402,7 @@
                             <div class="figure mt-4">
                                 <p class="text-center">Figura 3: Precisión de clasificación de entrenamiento y validación por época.</p>
                                 <div class="bg-slate-100 flex items-center justify-center rounded-md p-2">
-                                    <img src="/img/accuracy.png" alt="Figura 3: Precisión" class="max-w-full h-auto rounded" />
+                                    <img src="img/accuracy.png" alt="Figura 3: Precisión" class="max-w-full h-auto rounded" />
                                 </div>
                             </div>
                         </div>
@@ -434,7 +434,7 @@
                             <div class="figure mt-4">
                                 <p class="text-center">Figura 4: MAE de regresión de entrenamiento y validación por época.</p>
                                 <div class="bg-slate-100 flex items-center justify-center rounded-md p-2">
-                                    <img src="/img/maeregresion.png" alt="Figura 4: MAE" class="max-w-full h-auto rounded" />
+                                    <img src="img/maeregresion.png" alt="Figura 4: MAE" class="max-w-full h-auto rounded" />
                                 </div>
                             </div>
                         </div>
@@ -733,7 +733,7 @@
 
   async function loadModel() {
     try {
-      model = await tf.loadLayersModel('./web_model/model.json');
+      model = await tf.loadLayersModel('/web_model/model.json');
       console.log("Modelo cargado correctamente");
     } catch (err) {
       console.error("Error al cargar el modelo:", err);
