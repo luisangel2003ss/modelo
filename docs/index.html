@@ -733,7 +733,7 @@
 
   async function loadModel() {
     try {
-      model = await tf.loadLayersModel('/web_model/model.json');
+      model = await tf.loadLayersModel('web_model/model.json');
       console.log("Modelo cargado correctamente");
     } catch (err) {
       console.error("Error al cargar el modelo:", err);
