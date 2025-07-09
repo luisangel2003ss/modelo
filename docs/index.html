@@ -727,62 +727,60 @@
             });
         </script>
     
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
-<script>
-  let model; // variable global
 
-  // ✅ Cargar el modelo
-  async function loadModel() {
-    try {
-      model = await tf.loadLayersModel('docs/web_model/model.json');
-      console.log("✅ Modelo cargado correctamente");
-    } catch (error) {
-      console.error("❌ Error al cargar el modelo:", error);
-      alert("No se pudo cargar el modelo. Revisa la consola para más detalles.");
-    }
-  }
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+    <script>
+        let model; // variable global
 
-  // ✅ Preprocesar entrada
-  function preprocess(year, month, operator, county, type_operation, source) {
-    return tf.tensor2d([[year, month, operator, county, type_operation, source]]);
-  }
-
-  // ✅ Ejecutar después de que el DOM cargue
-  document.addEventListener("DOMContentLoaded", () => {
-    loadModel(); // Cargar modelo al inicio
-
-    // Escuchar evento de formulario
-    document.getElementById("predictionForm").addEventListener("submit", async function(e) {
-      e.preventDefault();
-
-      try {
-        if (!model) {
-          alert("El modelo aún no ha sido cargado.");
-          return;
+        // Function to load the model
+        async function loadModel() {
+            try {
+                // Update the path to the model file
+                model = await tf.loadLayersModel('/web_model/model.json');
+                console.log("✅ Modelo cargado correctamente");
+            } catch (error) {
+                console.error("❌ Error al cargar el modelo:", error);
+                alert("No se pudo cargar el modelo. Revisa la consola para más detalles.");
+            }
         }
 
-        const year = parseInt(document.getElementById("year").value);
-        const month = parseInt(document.getElementById("month").value);
-        const operator = parseInt(document.getElementById("operator").value);
-        const county = parseInt(document.getElementById("county").value);
-        const type_operation = parseInt(document.getElementById("type_operation").value);
-        const source = parseInt(document.getElementById("source").value);
+        // Preprocess input
+        function preprocess(year, month, operator, county, type_operation, source) {
+            return tf.tensor2d([[year, month, operator, county, type_operation, source]]);
+        }
 
-        const inputTensor = preprocess(year, month, operator, county, type_operation, source);
-        const prediction = model.predict(inputTensor);
-        const result = await prediction.data();
+        // Execute after the DOM loads
+        document.addEventListener("DOMContentLoaded", () => {
+            loadModel(); // Load model at the start
 
-        const output = document.getElementById("predictionOutput");
-        output.innerText = `${result[0].toFixed(2)} galones`;
+            // Listen to form submission event
+            document.getElementById("predictionForm").addEventListener("submit", async function(e) {
+                e.preventDefault();
+                try {
+                    if (!model) {
+                        alert("El modelo aún no ha sido cargado.");
+                        return;
+                    }
+                    const year = parseInt(document.getElementById("year").value);
+                    const month = parseInt(document.getElementById("month").value);
+                    const operator = parseInt(document.getElementById("operator").value);
+                    const county = parseInt(document.getElementById("county").value);
+                    const type_operation = parseInt(document.getElementById("type_operation").value);
+                    const source = parseInt(document.getElementById("source").value);
 
-        document.getElementById("result").classList.remove("hidden");
-      } catch (error) {
-        console.error("❌ Error durante la predicción:", error);
-        alert("Hubo un problema al predecir. Revisa la consola para más detalles.");
-      }
-    });
-  });
-</script>
+                    const inputTensor = preprocess(year, month, operator, county, type_operation, source);
+                    const prediction = model.predict(inputTensor);
+                    const result = await prediction.data();
+                    const output = document.getElementById("predictionOutput");
+                    output.innerText = `${result[0].toFixed(2)} galones`;
+                    document.getElementById("result").classList.remove("hidden");
+                } catch (error) {
+                    console.error("❌ Error durante la predicción:", error);
+                    alert("Hubo un problema al predecir. Revisa la consola para más detalles.");
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>
