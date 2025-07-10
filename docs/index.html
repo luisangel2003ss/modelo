@@ -733,7 +733,7 @@
         let model; // variable global
 
         // Function to load the model
-        async function loadModel() {
+        async function loadModel(model.json) {
             try {
                 // Adjust the path to the model file based on the location of your HTML file
                 model = await tf.loadLayersModel('/docs/web_model/model.json');
