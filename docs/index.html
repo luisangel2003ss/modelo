@@ -1,17 +1,9 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Informe Interactivo: Predicción de Derrames de Petróleo</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Roboto+Mono:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de Derrames de Agua Producida en Texas (2013-2022)</title>
     <style>
       body {
         font-family: "Inter", sans-serif;
@@ -180,607 +172,764 @@
         width: 600px;
         max-width: 1000px;
         height: auto !important;
-      }
+         }
 
+   
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        nav { background-color: #f8f8f8; padding: 10px; }
+        nav ul { list-style-type: none; padding: 0; }
+        nav ul li { display: inline; margin-right: 10px; }
+        nav ul li a { text-decoration: none; color: #333; }
+        section { margin-bottom: 20px; }
+        h1, h2, h3 { color: #333; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        img { max-width: 100%; height: auto; }
+        .math { font-style: italic; }
     </style>
-  </head>
-  <body class="bg-slate-50 text-slate-700">
-        <div class="flex">
-        <!-- Sidebar Navigation -->
-        <aside class="sidebar sticky top-0 h-screen w-64 bg-white shadow-md hidden lg:block">
-            <div class="p-6">
-                <h2 class="text-xl font-bold text-slate-800">Menú del Informe</h2>
-            </div>
-            <nav id="nav-menu" class="flex flex-col px-3">
-                <a href="#problem-statement" class="nav-link py-2 px-3 my-1 rounded-md font-medium text-slate-600 hover:bg-slate-100">Problema</a>
-                <a href="#introduction" class="nav-link py-2 px-3 my-1 rounded-md font-medium text-slate-600 hover:bg-slate-100">Introducción</a>
-                <a href="#objectives" class="nav-link py-2 px-3 my-1 rounded-md font-medium text-slate-600 hover:bg-slate-100">Objetivos</a>
-                <a href="#summary" class="nav-link py-2 px-3 my-1 rounded-md font-medium text-slate-600 hover:bg-slate-100">Resumen y Métricas</a>
-                <a href="#methodology" class="nav-link py-2 px-3 my-1 rounded-md font-medium text-slate-600 hover:bg-slate-100">Metodología</a>
-                <a href="#experimentation" class="nav-link py-2 px-3 my-1 rounded-md font-medium text-slate-600 hover:bg-slate-100">Experimentación</a>
-                <a href="#resultados" class="nav-link py-2 px-3 my-1 rounded-md font-medium text-slate-600 hover:bg-slate-100">Resultados Clave</a>
-                <a href="#performance" class="nav-link py-2 px-3 my-1 rounded-md font-medium text-slate-600 hover:bg-slate-100">Rendimiento</a>
-                <a href="#discussion" class="nav-link py-2 px-3 my-1 rounded-md font-medium text-slate-600 hover:bg-slate-100">Discusión</a>
-                <a href="#predictions" class="nav-link py-2 px-3 my-1 rounded-md font-medium text-slate-600 hover:bg-slate-100">Predicciones</a>
-                <a href="#web-application" class="nav-link py-2 px-3 my-1 rounded-md font-medium text-slate-600 hover:bg-slate-100">Aplicación Web</a>
-                <a href="#conclusion" class="nav-link py-2 px-3 my-1 rounded-md font-medium text-slate-600 hover:bg-slate-100">Conclusiones</a>
-            </nav>
-        </aside>
-        <!-- Main Content -->
-        <main class="main-content w-full p-4 md:p-10">
-            <div class="max-w-4xl mx-auto">
-                <header class="mb-12 text-center">
-                    <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-2">Análisis de Derrames de Agua Producida en Texas (2013-2022)</h1>
-                    <p class="text-xl text-slate-600">Un Vistazo Interactivo al Modelo Multitarea</p>
-                </header>
+</head>
+<body>
+    <nav>
+        <h2>Menú del Informe</h2>
+        <ul>
+            <li><a href="#machine-learning">Entendiendo Machine Learning</a></li>
+            <li><a href="#problema">Problema</a></li>
+            <li><a href="#introduccion">Introducción</a></li>
+            <li><a href="#objetivos">Objetivos</a></li>
+            <li><a href="#resumen">Resumen y Métricas</a></li>
+            <li><a href="#metodologia">Metodología</a></li>
+            <li><a href="#experimentacion">Experimentación</a></li>
+            <li><a href="#resultados">Resultados Clave</a></li>
+            <li><a href="#rendimiento">Rendimiento</a></li>
+            <li><a href="#discusion">Discusión</a></li>
+            <li><a href="#predicciones">Predicciones</a></li>
+            <li><a href="#aplicacion">Aplicación Web</a></li>
+            <li><a href="#conclusiones">Conclusiones</a></li>
+        </ul>
+    </nav>
 
-                <!-- Section: Problem Statement -->
-                <section id="problem-statement" class="mb-16">
-                    <h2 class="section-title text-3xl font-bold mb-6 pb-2 border-b-2 border-slate-200">1. Problem Statement</h2>
-                    <p class="section-content mb-4 text-lg">
-                        Este proyecto analiza los derrames de agua producida reportados por la industria del petróleo y gas en Texas entre 2013 y 2022. Los datos provienen de informes oficiales de la Comisión de Ferrocarriles de Texas (RRC), detallando más de 10,000 incidentes durante este período. El conjunto de datos incluye variables como la fecha del derrame, el nombre del operador, el condado de ocurrencia, el tipo de operación, la fuente y la causa probable del derrame, y los volúmenes derramados y recuperados.
-                    </p>
-                    <p class="section-content mb-4 text-lg">
-                        El agua producida contiene sustancias tóxicas como metales pesados, residuos de hidrocarburos y químicos utilizados en la fracturación hidráulica, lo que representa una amenaza significativa para el medio ambiente y la salud pública. Este análisis busca entender la magnitud, recurrencia y distribución espacial de tales incidentes para identificar zonas críticas, evaluar la responsabilidad del operador y proponer estrategias de gestión ambiental más efectivas.
-                    </p>
-                </section>
+    <header>
+        <h1>Análisis de Derrames de Agua Producida en Texas (2013-2022)</h1>
+        <h2>Un Vistazo Interactivo al Modelo Multitarea</h2>
+    </header>
 
-                <!-- Section: Introduction -->
-                <section id="introduction" class="mb-16">
-                    <h2 class="section-title text-3xl font-bold mb-6 pb-2 border-b-2 border-slate-200">2. Introducción</h2>
-                    <p class="section-content mb-4 text-lg">
-                        El agua producida representa riesgos ambientales y de salud significativos cuando no se gestiona adecuadamente. En Texas, se reportaron más de 10,000 derrames totalizando más de 148 millones de galones entre 2013 y 2022; solo alrededor del 40% de ese volumen fue recuperado, dejando el resto para impactar el suelo, el agua y los ecosistemas. El agua producida puede contener toxinas como benceno, metales pesados, radio y salinidad elevada, que se han relacionado con la degradación del suelo, la pérdida de vegetación, la mortalidad de la vida silvestre y la contaminación de acuíferos.
-                    </p>
-                    <div class="figure max-w-3xl mx-auto">
-                        <p class="text-center">Figura 1: Visualización geográfica de derrames de agua producida en Texas usando QGIS.</p>
-                        <div class="bg-slate-100 flex items-center justify-center rounded-md p-2">
-                            <img src="img/mapa.png" alt="Figura 1: Mapa Derrames" class="max-w-full h-auto rounded" />
-                        </div>
-                    </div>
-                </section>
+    <section id="machine-learning">
+        <h2>Entendiendo Machine Learning</h2>
+        <p>El aprendizaje automático (<em>machine learning</em>) es una rama de la inteligencia artificial que permite a los sistemas aprender patrones a partir de datos sin ser explícitamente programados. En este proyecto, utilizamos técnicas de aprendizaje automático, específicamente regresión lineal y conceptos relacionados, para analizar los derrames de agua producida. A continuación, se explican los fundamentos teóricos clave para comprender el enfoque utilizado.</p>
 
+        <h3>Regresión Lineal</h3>
+        <p>La regresión lineal es una técnica estadística utilizada para modelar la relación entre una variable dependiente (etiqueta) y una o más variables independientes (características). En el contexto del aprendizaje automático, se utiliza para predecir valores numéricos continuos.</p>
+        <p>Por ejemplo, supongamos que queremos predecir la eficiencia de combustible de un automóvil (millas por galón) basándonos en su peso (en miles de libras). A continuación, se muestra un conjunto de datos de ejemplo:</p>
+        <table>
+            <tr><th>Peso (miles de libras)</th><th>Millas por galón</th></tr>
+            <tr><td>3.5</td><td>18</td></tr>
+            <tr><td>3.69</td><td>15</td></tr>
+            <tr><td>3.44</td><td>18</td></tr>
+            <tr><td>3.43</td><td>16</td></tr>
+            <tr><td>4.34</td><td>15</td></tr>
+            <tr><td>4.42</td><td>14</td></tr>
+            <tr><td>2.37</td><td>24</td></tr>
+        </table>
+        <p>Figura 1: Gráfico de puntos que muestra una tendencia descendente de izquierda a derecha, donde a mayor peso, menor eficiencia de combustible.</p>
+        <img src="placeholder_car_data.png" alt="Peso vs. Eficiencia de combustible">
 
-                </section>
+        <h4>Ecuación de la Regresión Lineal</h4>
+        <p>La regresión lineal modela la relación entre las variables mediante una línea recta, definida por la ecuación:</p>
+        <p class="math">y = mx + b</p>
+        <p>Donde:</p>
+        <ul>
+            <li><span class="math">y</span>: es la variable dependiente (etiqueta, en este caso, millas por galón).</li>
+            <li><span class="math">m</span>: es la pendiente de la línea, que representa el cambio en <span class="math">y</span> por cada unidad de cambio en <span class="math">x</span>.</li>
+            <li><span class="math">x</span>: es la variable independiente (característica, en este caso, peso).</li>
+            <li><span class="math">b</span>: es la intersección con el eje y (el valor de <span class="math">y</span> cuando <span class="math">x = 0</span>).</li>
+        </ul>
+        <p>En el aprendizaje automático, esta ecuación se escribe como:</p>
+        <p class="math">y' = b + w₁x₁</p>
+        <p>Donde:</p>
+        <ul>
+            <li><span class="math">y'</span>: es la predicción del modelo (etiqueta predicha).</li>
+            <li><span class="math">b</span>: es el sesgo (<em>bias</em>), equivalente a la intersección con el eje y.</li>
+            <li><span class="math">w₁</span>: es el peso (<em>weight</em>) de la característica, equivalente a la pendiente.</li>
+            <li><span class="math">x₁</span>: es la característica de entrada.</li>
+        </ul>
+        <p>Figura 2: Representación matemática del modelo lineal.</p>
+        <img src="placeholder_linear_equation.png" alt="Ecuación de regresión lineal">
+        <p>En nuestro ejemplo, después de entrenar el modelo, se obtuvo un sesgo de 34 y un peso de -4.6, dando como resultado la ecuación <span class="math">y' = 34 - 4.6x₁</span>. Usando esta ecuación, un automóvil de 4,000 libras tendría una eficiencia predicha de 15.6 millas por galón.</p>
+        <p>Figura 3: Gráfico con la línea de mejor ajuste y el punto predicho (4, 15.6).</p>
+        <img src="placeholder_best_fit_line.png" alt="Línea de mejor ajuste">
 
-                <!-- Section: Objectives -->
-                <section id="objectives" class="mb-16">
-                    <h2 class="section-title text-3xl font-bold mb-6 pb-2 border-b-2 border-slate-200">3. Objetivos</h2>
-                    <div class="mb-8">
-                        <h3 class="text-xl font-bold text-slate-800 mb-4">3.1 Objetivo General</h3>
-                        <p class="section-content mb-4 text-lg">
-                            Desarrollar un modelo multitarea basado en Keras que prediga simultáneamente el volumen de agua producida derramada y su causa probable, utilizando Optuna para la optimización de hiperparámetros.
-                        </p>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold text-slate-800 mb-4">3.2 Objetivos Específicos</h3>
-                        <ul class="section-content space-y-2 text-lg">
-                            <li>• Preprocesar el conjunto de datos utilizando transformaciones logarítmicas, codificación one-hot y división de fechas.</li>
-                            <li>• Diseñar una arquitectura neuronal con capas ocultas compartidas y cabezales separados para regresión y clasificación.</li>
-                            <li>• Optimizar los hiperparámetros del modelo mediante Optuna en variables arquitectónicas y de entrenamiento.</li>
-                            <li>• Evaluar utilizando R², MAE, MSE y Accuracy.</li>
-                            <li>• Automatizar la identificación y reutilización de la mejor configuración para el despliegue.</li>
-                        </ul>
-                    </div>
-                </section>
+        <h4>Modelos con Múltiples Características</h4>
+        <p>En casos más complejos, la regresión lineal puede incluir múltiples características. Por ejemplo, para predecir la eficiencia de combustible, podríamos usar características adicionales como:</p>
+        <ul>
+            <li>Desplazamiento del motor</li>
+            <li>Aceleración</li>
+            <li>Número de cilindros</li>
+            <li>Potencia (caballos de fuerza)</li>
+        </ul>
+        <p>La ecuación para un modelo con múltiples características es:</p>
+        <p class="math">y' = b + w₁x₁ + w₂x₂ + ... + wₙxₙ</p>
+        <p>Donde cada <span class="math">wᵢ</span> representa el peso de la característica <span class="math">xᵢ</span>.</p>
 
-                <!-- Section 1: Summary & Key Metrics -->
-                <section id="summary" class="mb-16">
-                    <h2 class="section-title text-3xl font-bold mb-6 pb-2 border-b-2 border-slate-200">4. Resumen y Métricas Clave</h2>
-                    <p class="section-content mb-8 text-lg">
-                        Esta aplicación presenta un modelo de red neuronal diseñado para una doble tarea: predecir el <strong>volumen de agua derramada</strong> (regresión) y su <strong>causa probable</strong> (clasificación). Mediante la optimización automática con Optuna, el modelo logra un rendimiento prometedor, demostrando el potencial de los enfoques multitarea en contextos industriales complejos. A continuación se presentan los resultados finales más importantes.
-                    </p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-center">
-                        <div class="stat-card">
-                            <p class="text-sm font-medium text-slate-500">Coeficiente R² (Volumen)</p>
-                            <p id="r2-value" class="text-4xl font-bold text-blue-600">0.347</p>
-                        </div>
-                        <div class="stat-card">
-                            <p class="text-sm font-medium text-slate-500">Precisión (Causa)</p>
-                            <p id="accuracy-value" class="text-4xl font-bold text-blue-600">49.8%</p>
-                        </div>
-                        <div class="stat-card">
-                            <p class="text-sm font-medium text-slate-500">Error Absoluto Medio</p>
-                            <p id="mae-value" class="text-4xl font-bold text-blue-600">1.279</p>
-                        </div>
-                        <div class="stat-card">
-                            <p class="text-sm font-medium text-slate-500">Error Cuadrático Medio</p>
-                            <p id="mse-value" class="text-4xl font-bold text-blue-600">2.764</p>
-                        </div>
-                    </div>
-                </section>
+        <h3>Pérdida (<em>Loss</em>)</h3>
+        <p>La pérdida es una métrica numérica que mide cuán erróneas son las predicciones de un modelo en comparación con los valores reales. El objetivo del entrenamiento es minimizar la pérdida. La pérdida se visualiza como la distancia entre los valores predichos y los valores reales.</p>
+        <p>Figura 4: Líneas de pérdida que conectan los puntos de datos con el modelo, mostrando la distancia entre los valores reales y predichos.</p>
+        <img src="placeholder_loss_lines.png" alt="Líneas de pérdida">
 
-                <!-- Section 2: Methodology -->
-                <section id="methodology" class="mb-16">
-                    <h2 class="section-title text-3xl font-bold mb-6 pb-2 border-b-2 border-slate-200">5. Metodología Interactiva</h2>
-                    <p class="section-content mb-8 text-lg">El modelo fue construido siguiendo un flujo de trabajo automatizado que va desde el preprocesamiento de los datos hasta la optimización de la arquitectura de la red neuronal. Este enfoque asegura la reproducibilidad y facilita la mejora continua del sistema.</p>
-                    
-                    <div class="mb-8">
-                        <h3 class="text-xl font-bold text-slate-800 mb-4">5.1 Preparación de Datos</h3>
-                        <ul class="section-content space-y-2 text-lg">
-                            <li>• <strong>Valores faltantes:</strong> imputados utilizando la mediana y marcadores de posición 'Desconocido'.</li>
-                            <li>• <strong>Transformación logarítmica:</strong> aplicada a los volúmenes de derrame para manejar la asimetría.</li>
-                            <li>• <strong>Codificación:</strong> variables categóricas codificadas one-hot; fechas divididas en año/mes.</li>
-                            <li>• <strong>Escalado:</strong> características normalizadas utilizando MinMaxScaler.</li>
-                        </ul>
-                    </div>
-                    
-                    <div>
-                        <div class="method-step">
-                            <div class="method-icon">📊</div>
-                            <h3 class="text-xl font-bold text-slate-800 mb-2">1. Preprocesamiento de Datos</h3>
-                            <p>Se utilizó un conjunto de datos real de derrames. Las variables categóricas (operador, condado, causa, etc.) fueron transformadas con <code>OneHotEncoder</code>, mientras que a la variable objetivo de volumen se le aplicó una transformación logarítmica para estabilizar la varianza.</p>
-                        </div>
-                        <div class="method-step">
-                            <div class="method-icon">🧠</div>
-                            <h3 class="text-xl font-bold text-slate-800 mb-2">2. Modelo de Red Neuronal Multitarea</h3>
-                            <p>El núcleo del sistema es una red neuronal con capas compartidas que aprenden características comunes de los datos. El modelo se bifurca en dos salidas especializadas:</p>
-                            <ul class="list-disc list-inside mt-2 space-y-1">
-                                <li><strong class="text-blue-600">Salida de Regresión:</strong> Una capa densa con activación lineal para predecir el volumen del derrame.</li>
-                                <li><strong class="text-blue-600">Salida de Clasificación:</strong> Una capa densa con activación Softmax para predecir la probabilidad de cada causa posible.</li>
-                            </ul>
-                        </div>
-                        <div class="method-step">
-                            <div class="method-icon">⚙️</div>
-                            <h3 class="text-xl font-bold text-slate-800 mb-2">3. Optimización con Optuna</h3>
-                            <p>Para encontrar la mejor configuración, se usó <strong>Optuna</strong>, un framework de optimización bayesiana que ajustó automáticamente los siguientes hiperparámetros clave para minimizar la pérdida combinada del modelo:</p>
-                            <p class="font-mono text-sm bg-slate-100 p-3 rounded-md mt-2">Capas, Neuronas, Dropout, Regularización L2, Tasa de Aprendizaje, Optimizador, Tamaño de Lote.</p>
-                        </div>
-                    </div>
-                </section>
+        <h4>Tipos de Pérdida</h4>
+        <p>En la regresión lineal, se utilizan principalmente dos tipos de pérdida:</p>
+        <table>
+            <tr><th>Tipo de Pérdida</th><th>Definición</th><th>Ecuación</th></tr>
+            <tr><td>Pérdida L1</td><td>Suma de los valores absolutos de la diferencia entre los valores predichos y reales.</td><td class="math">L1 = |y - y'|</td></tr>
+            <tr><td>Error Absoluto Medio (MAE)</td><td>Promedio de las pérdidas L1 sobre un conjunto de N ejemplos.</td><td class="math">MAE = (1/N) * Σ|y - y'|</td></tr>
+            <tr><td>Pérdida L2</td><td>Suma de las diferencias al cuadrado entre los valores predichos y reales.</td><td class="math">L2 = (y - y')²</td></tr>
+            <tr><td>Error Cuadrático Medio (MSE)</td><td>Promedio de las pérdidas L2 sobre un conjunto de N ejemplos.</td><td class="math">MSE = (1/N) * Σ(y - y')²</td></tr>
+        </table>
+        <p>La diferencia principal entre L1 y L2 (o MAE y MSE) es que L2 penaliza más los errores grandes al elevarlos al cuadrado, mientras que L1 trata todos los errores de manera lineal.</p>
+        <p>Ejemplo de cálculo de pérdida L2: Si el modelo predice 23.1 millas por galón para un automóvil de 2,370 libras, pero el valor real es 26 millas por galón, la pérdida L2 se calcula como:</p>
+        <p class="math">L2 = (26 - 23.1)² = 8.41</p>
 
-                <!-- Section: Experimentation -->
-                <section id="experimentation" class="mb-16">
-                    <h2 class="section-title text-3xl font-bold mb-6 pb-2 border-b-2 border-slate-200">6. Experimentación y Resultados</h2>
-                    <div class="mb-8">
-                        <h3 class="text-xl font-bold text-slate-800 mb-4">6.1 Plataforma Computacional</h3>
-                        <p class="section-content mb-4 text-lg">
-                            El desarrollo del modelo siguió un flujo de trabajo computacional estructurado. El prototipado inicial se realizó en el IDE Spyder, donde se diseñaron y probaron versiones tempranas de la red neuronal utilizando muestras pequeñas de datos y arquitecturas simplificadas. Una vez definida la arquitectura central, el proyecto migró a Google Colab para aprovechar su aceleración gratuita de GPU.
-                        </p>
-                    </div>
-                    
-                    <div class="mb-8">
-                        <h3 class="text-xl font-bold text-slate-800 mb-4">6.2 Análisis de Rendimiento del Modelo</h3>
-                        <p class="section-content mb-4 text-lg">
-                            Esta sección detalla el rendimiento de la red neuronal multitarea en varias métricas para la predicción del volumen de derrame (regresión) y la causa del derrame (clasificación).
-                        </p>
-                        
-                        <!-- Pérdida Total -->
-                        <div class="mb-8 max-w-3xl mx-auto">
-                            <h4 class="text-lg font-bold text-slate-800 mb-4">Pérdida Total</h4>
-                            <table class="data-table w-full">
-                                <thead>
-                                    <tr>
-                                        <th>Época</th>
-                                        <th>Pérdida de Entrenamiento</th>
-                                        <th>Pérdida de Validación</th>
-                                        <th>Diferencia</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr><td>1</td><td>62.2842</td><td>45.1358</td><td>17.1484</td></tr>
-                                    <tr><td>6</td><td>7.2674</td><td>4.8145</td><td>2.4529</td></tr>
-                                    <tr><td>11</td><td>5.6395</td><td>4.6213</td><td>1.0182</td></tr>
-                                    <tr><td>16</td><td>4.9681</td><td>4.6037</td><td>0.3645</td></tr>
-                                    <tr><td>21</td><td>4.5250</td><td>4.6631</td><td>0.1382</td></tr>
-                                    <tr><td>26</td><td>4.3510</td><td>4.6861</td><td>0.3352</td></tr>
-                                    <tr><td>27</td><td>4.2380</td><td>4.7025</td><td>0.4644</td></tr>
-                                </tbody>
-                            </table>
+        <h4>Elección de la Pérdida</h4>
+        <p>La elección entre MAE y MSE depende del conjunto de datos y de cómo se deseen manejar los valores atípicos (<em>outliers</em>). MSE penaliza más los errores grandes, lo que hace que el modelo se ajuste más a los valores atípicos. MAE, por otro lado, es menos sensible a los valores atípicos, lo que resulta en un modelo que se ajusta mejor a la mayoría de los datos.</p>
+        <p>Figura 5: Modelo entrenado con MSE, más cercano a los valores atípicos.</p>
+        <img src="placeholder_mse_model.png" alt="Modelo entrenado con MSE">
+        <p>Figura 6: Modelo entrenado con MAE, más alejado de los valores atípicos.</p>
+        <img src="placeholder_mae_model.png" alt="Modelo entrenado con MAE">
 
-                            <div class="figure mt-4">
-                                <p class="text-center">Figura 2: Pérdida total de entrenamiento y validación por época.</p>
-                                <div class="bg-slate-100 flex items-center justify-center rounded-md p-2">
-                                    <img src="img/perdidatotal.png" alt="Figura 2: Pérdida total" class="max-w-full h-auto rounded" />
-                                </div>
-                            </div>
-                        </div>
+        <h3>Descenso por Gradiente</h3>
+        <p>El descenso por gradiente es una técnica matemática que ajusta iterativamente los pesos y el sesgo del modelo para minimizar la pérdida. El proceso consiste en:</p>
+        <ol>
+            <li>Iniciar con pesos y sesgo aleatorios cercanos a cero.</li>
+            <li>Calcular la pérdida con los pesos y sesgo actuales.</li>
+            <li>Determinar la dirección que reduce la pérdida (usando el gradiente).</li>
+            <li>Actualizar los pesos y el sesgo en pequeños incrementos en esa dirección.</li>
+            <li>Repetir hasta que la pérdida no pueda reducirse más (convergencia).</li>
+        </ol>
+        <p>Figura 7: Ilustración del proceso de descenso por gradiente.</p>
+        <img src="placeholder_gradient_descent.png" alt="Descenso por gradiente">
 
+        <h4>Curvas de Pérdida y Convergencia</h4>
+        <p>Una curva de pérdida muestra cómo cambia la pérdida a medida que el modelo entrena. Una curva típica muestra una disminución rápida al inicio, seguida de una estabilización cuando el modelo converge.</p>
+        <p>Figura 8: Curva de pérdida que muestra convergencia alrededor de la iteración 1,000.</p>
+        <img src="placeholder_loss_curve.png" alt="Curva de pérdida">
+        <p>Figura 9: Instantáneas del modelo en diferentes etapas del entrenamiento, mostrando cómo mejora con el tiempo.</p>
+        <img src="placeholder_training_snapshots.png" alt="Instantáneas del entrenamiento">
 
-                        <!-- Precisión de Clasificación -->
-                        <div class="mb-8 max-w-3xl mx-auto">
-                            <h4 class="text-lg font-bold text-slate-800 mb-4">Precisión de Clasificación</h4>
-                            <table class="data-table w-full">
-                                <thead>
-                                    <tr>
-                                        <th>Época</th>
-                                        <th>Precisión de Entrenamiento</th>
-                                        <th>Precisión de Validación</th>
-                                        <th>Diferencia</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr><td>1</td><td>0.0726</td><td>0.0145</td><td>0.0581</td></tr>
-                                    <tr><td>6</td><td>0.4658</td><td>0.4939</td><td>0.0281</td></tr>
-                                    <tr><td>11</td><td>0.4837</td><td>0.4982</td><td>0.0145</td></tr>
-                                    <tr><td>16</td><td>0.4930</td><td>0.5012</td><td>0.0082</td></tr>
-                                    <tr><td>21</td><td>0.4988</td><td>0.4952</td><td>0.0036</td></tr>
-                                    <tr><td>26</td><td>0.4989</td><td>0.5024</td><td>0.0035</td></tr>
-                                    <tr><td>27</td><td>0.5032</td><td>0.5036</td><td>0.0005</td></tr>
-                                </tbody>
-                            </table>
+        <h4>Superficie de Pérdida Convexa</h4>
+        <p>En la regresión lineal, la superficie de pérdida es siempre convexa, lo que garantiza que el descenso por gradiente encuentre el mínimo global. La figura siguiente muestra una superficie de pérdida para un modelo con una característica:</p>
+        <p>Figura 10: Superficie de pérdida convexa con el mínimo en (peso = -5.44, sesgo = 35.94, pérdida = 5.54).</p>
+        <img src="placeholder_loss_surface.png" alt="Superficie de pérdida">
 
-                            <div class="figure mt-4">
-                                <p class="text-center">Figura 3: Precisión de clasificación de entrenamiento y validación por época.</p>
-                                <div class="bg-slate-100 flex items-center justify-center rounded-md p-2">
-                                    <img src="img/accuracy.png" alt="Figura 3: Precisión" class="max-w-full h-auto rounded" />
-                                </div>
-                            </div>
-                        </div>
+        <h3>Hiperparámetros</h3>
+        <p>Los hiperparámetros son variables que controlan el proceso de entrenamiento, a diferencia de los parámetros (pesos y sesgo) que el modelo calcula. Los principales hiperparámetros son:</p>
 
+        <h4>Tasa de Aprendizaje (<em>Learning Rate</em>)</h4>
+        <p>La tasa de aprendizaje determina el tamaño de los ajustes a los pesos y el sesgo en cada iteración. Una tasa demasiado baja hace que el modelo converja lentamente, mientras que una tasa demasiado alta puede hacer que el modelo no converja. La figura siguiente muestra el impacto de diferentes tasas de aprendizaje:</p>
+        <p>Figura 11: Curva de pérdida con una tasa de aprendizaje ideal.</p>
+        <img src="placeholder_ideal_lr.png" alt="Tasa de aprendizaje ideal">
+        <p>Figura 12: Curva de pérdida con una tasa de aprendizaje demasiado baja.</p>
+        <img src="placeholder_low_lr.png" alt="Tasa de aprendizaje baja">
+        <p>Figura 13: Curva de pérdida con una tasa de aprendizaje demasiado alta.</p>
+        <img src="placeholder_high_lr.png" alt="Tasa de aprendizaje alta">
 
-                        <!-- MAE de Regresión -->
-                        <div class="mb-8 max-w-3xl mx-auto">
-                            <h4 class="text-lg font-bold text-slate-800 mb-4">MAE de Regresión (Error Absoluto Medio)</h4>
-                            <table class="data-table w-full">
-                                <thead>
-                                    <tr>
-                                        <th>Época</th>
-                                        <th>MAE de Entrenamiento</th>
-                                        <th>MAE de Validación</th>
-                                        <th>Diferencia</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr><td>1</td><td>7.1658</td><td>6.0034</td><td>1.1624</td></tr>
-                                    <tr><td>6</td><td>1.8600</td><td>1.3799</td><td>0.4801</td></tr>
-                                    <tr><td>11</td><td>1.5793</td><td>1.3305</td><td>0.2488</td></tr>
-                                    <tr><td>16</td><td>1.4395</td><td>1.3250</td><td>0.1146</td></tr>
-                                    <tr><td>21</td><td>1.3427</td><td>1.3326</td><td>0.0102</td></tr>
-                                    <tr><td>26</td><td>1.3003</td><td>1.3313</td><td>0.0310</td></tr>
-                                    <tr><td>27</td><td>1.2843</td><td>1.3365</td><td>0.0522</td></tr>
-                                </tbody>
-                            </table>
+        <h4>Tamaño del Lote (<em>Batch Size</em>)</h4>
+        <p>El tamaño del lote determina cuántos ejemplos procesa el modelo antes de actualizar los pesos y el sesgo. Las opciones incluyen:</p>
+        <ul>
+            <li><strong>Descenso por gradiente estocástico (SGD):</strong> Usa un solo ejemplo por iteración, lo que introduce ruido en la curva de pérdida.</li>
+            <li><strong>Descenso por gradiente de mini-lotes:</strong> Usa un subconjunto de ejemplos, equilibrando ruido y eficiencia.</li>
+        </ul>
+        <p>Figura 14: Curva de pérdida con SGD, mostrando ruido.</p>
+        <img src="placeholder_sgd_loss.png" alt="Curva de pérdida SGD">
+        <p>Figura 15: Curva de pérdida con mini-lotes, con menos ruido.</p>
+        <img src="placeholder_minibatch_loss.png" alt="Curva de pérdida mini-lotes">
 
-                            <div class="figure mt-4">
-                                <p class="text-center">Figura 4: MAE de regresión de entrenamiento y validación por época.</p>
-                                <div class="bg-slate-100 flex items-center justify-center rounded-md p-2">
-                                    <img src="img/maeregresion.png" alt="Figura 4: MAE" class="max-w-full h-auto rounded" />
-                                </div>
-                            </div>
-                        </div>
+        <h4>Épocas (<em>Epochs</em>)</h4>
+        <p>Una época ocurre cuando el modelo ha procesado todos los ejemplos del conjunto de datos una vez. El número de épocas es un hiperparámetro que afecta el tiempo de entrenamiento y la calidad del modelo.</p>
+        <p>Figura 16: Comparación entre lote completo, mini-lotes y épocas.</p>
+        <img src="placeholder_batch_epoch.png" alt="Lote vs. Épocas">
+    </section>
 
+    <section id="problema">
+        <h2>1. Problem Statement</h2>
+        <p>Este proyecto analiza los derrames de agua producida reportados por la industria del petróleo y gas en Texas entre 2013 y 2022. Los datos provienen de informes oficiales de la Comisión de Ferrocarriles de Texas (RRC), detallando más de 10,000 incidentes durante este período. El conjunto de datos incluye variables como la fecha del derrame, el nombre del operador, el condado de ocurrencia, el tipo de operación, la fuente y la causa probable del derrame, y los volúmenes derramados y recuperados.</p>
+        <p>El agua producida contiene sustancias tóxicas como metales pesados, residuos de hidrocarburos y químicos utilizados en la fracturación hidráulica, lo que representa una amenaza significativa para el medio ambiente y la salud pública. Este análisis busca entender la magnitud, recurrencia y distribución espacial de tales incidentes para identificar zonas críticas, evaluar la responsabilidad del operador y proponer estrategias de gestión ambiental más efectivas.</p>
+    </section>
 
-                        <!-- MSE de Regresión -->
-                        <div class="mb-8">
-                            <h4 class="text-lg font-bold text-slate-800 mb-4">MSE de Regresión (Error Cuadrático Medio)</h4>
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Época</th>
-                                        <th>MSE de Entrenamiento</th>
-                                        <th>MSE de Validación</th>
-                                        <th>Diferencia</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>106.2713</td>
-                                        <td>89.1004</td>
-                                        <td>17.1709</td>
-                                    </tr>
-                                    <tr>
-                                        <td>6</td>
-                                        <td>7.8123</td>
-                                        <td>5.7045</td>
-                                        <td>2.1078</td>
-                                    </tr>
-                                    <tr>
-                                        <td>11</td>
-                                        <td>6.4232</td>
-                                        <td>5.2283</td>
-                                        <td>1.1949</td>
-                                    </tr>
-                                    <tr>
-                                        <td>16</td>
-                                        <td>5.5246</td>
-                                        <td>5.1487</td>
-                                        <td>0.3759</td>
-                                    </tr>
-                                    <tr>
-                                        <td>21</td>
-                                        <td>5.1062</td>
-                                        <td>5.1610</td>
-                                        <td>0.0548</td>
-                                    </tr>
-                                    <tr>
-                                        <td>26</td>
-                                        <td>4.9517</td>
-                                        <td>5.1889</td>
-                                        <td>0.2372</td>
-                                    </tr>
-                                    <tr>
-                                        <td>27</td>
-                                        <td>4.8493</td>
-                                        <td>5.2098</td>
-                                        <td>0.3605</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            
-                	</div>
-            	</div>
-        	</section>
+    <section id="introduccion">
+        <h2>2. Introducción</h2>
+        <p>El agua producida representa riesgos ambientales y de salud significativos cuando no se gestiona adecuadamente. En Texas, se reportaron más de 10,000 derrames totalizando más de 148 millones de galones entre 2013 y 2022; solo alrededor del 40% de ese volumen fue recuperado, dejando el resto para impactar el suelo, el agua y los ecosistemas. El agua producida puede contener toxinas como benceno, metales pesados, radio y salinidad elevada, que se han relacionado con la degradación del suelo, la pérdida de vegetación, la mortalidad de la vida silvestre y la contaminación de acuíferos.</p>
+        <p>Figura 17: Visualización geográfica de derrames de agua producida en Texas usando QGIS.</p>
+        <img src="placeholder_qgis_map.png" alt="Visualización geográfica de derrames">
+    </section>
 
-       	 <!-- Section: Discussion -->
-        	<section id="discussion" class="mb-16">
-          	  <h2 class="section-title text-3xl font-bold mb-6 pb-2 border-b-2 border-slate-200">7. Discusión</h2>
-           	 <p class="section-content mb-4 text-lg">
-                A pesar de las limitaciones en la precisión de las predicciones, los resultados muestran una clara tendencia hacia la mejora del modelo con el aumento de datos y la optimización. El desempeño de la regresión (R² ≈ 0.35) y clasificación (≈ 50%) sugiere que el enfoque multitarea puede capturar patrones útiles incluso en conjuntos de datos con ruido e incertidumbre.
-         	   </p>
-           	 <p class="section-content mb-4 text-lg">
-                Se identificaron operadores y condados con altas tasas de derrames, lo que puede guiar intervenciones regulatorias. Además, la causa más común de los derrames fue el fallo de equipos, destacando la necesidad de mantenimiento preventivo en infraestructura.
-           	 </p>
-       	 </section>
+    <section id="objetivos">
+        <h2>3. Objetivos</h2>
+        <h3>3.1 Objetivo General</h3>
+        <p>Desarrollar un modelo multitarea basado en Keras que prediga simultáneamente el volumen de agua producida derramada y su causa probable, utilizando Optuna para la optimización de hiperparámetros.</p>
+        <h3>3.2 Objetivos Específicos</h3>
+        <ul>
+            <li>Preprocesar el conjunto de datos utilizando transformaciones logarítmicas, codificación one-hot y división de fechas.</li>
+            <li>Diseñar una arquitectura neuronal con capas ocultas compartidas y cabezales separados para regresión y clasificación.</li>
+            <li>Optimizar los hiperparámetros del modelo mediante Optuna en variables arquitectónicas y de entrenamiento.</li>
+            <li>Evaluar utilizando R², MAE, MSE y Accuracy.</li>
+            <li>Automatizar la identificación y reutilización de la mejor configuración para el despliegue.</li>
+        </ul>
+    </section>
 
-       	 <!-- Section: Web Application -->
-       	 <section id="web-application" class="mb-16">
-<div class="bg-white p-6 rounded-lg shadow-md max-w-2xl mx-auto mt-8">
-  <form id="predictionForm" class="space-y-4">
-    <div class="form-group">
-      <label for="year">Año:</label>
-      <input type="number" id="year" class="border rounded p-2 w-full" required>
-    </div>
-    <div class="form-group">
-      <label for="month">Mes:</label>
-      <select id="month" class="border rounded p-2 w-full">
-        <option value="1">Enero</option>
-        <option value="2">Febrero</option>
-        <option value="3">Marzo</option>
-        <option value="4">Abril</option>
-        <option value="5">Mayo</option>
-        <option value="6">Junio</option>
-        <option value="7">Julio</option>
-        <option value="8">Agosto</option>
-        <option value="9">Septiembre</option>
-        <option value="10">Octubre</option>
-        <option value="11">Noviembre</option>
-        <option value="12">Diciembre</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="operator">Operador:</label>
-      <select id="operator" class="border rounded p-2 w-full">
-        <option value="0">APACHE</option>
-        <option value="1">CLIMAREX ENERGY</option>
-        <option value="2">JONES ENERGY</option>
-        <option value="3">LAREDO PETROLEUM</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="county">Condado:</label>
-      <select id="county" class="border rounded p-2 w-full">
-        <option value="0">Glasscock</option>
-        <option value="1">Roberts</option>
-        <option value="2">Lipscomb</option>
-        <option value="3">Reagan</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="type_operation">Tipo de operación:</label>
-      <select id="type_operation" class="border rounded p-2 w-full">
-        <option value="0">PRODUCTION</option>
-        <option value="1">INJECTION/DISPOSAL</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="source">Fuente:</label>
-      <select id="source" class="border rounded p-2 w-full">
-        <option value="0">TANK</option>
-        <option value="1">WELL</option>
-      </select>
-    </div>
-    <button type="submit" class="predict-btn">Predecir</button>
-  </form>
-  <div id="result" class="result-card mt-4 hidden">
-    <p class="text-lg font-semibold">Predicción:</p>
-    <p id="predictionOutput" class="text-xl text-blue-600 mt-2"></p>
-  </div>
-</div>
+    <section id="resumen">
+        <h2>4. Resumen y Métricas Clave</h2>
+        <p>Esta aplicación presenta un modelo de red neuronal diseñado para una doble tarea: predecir el volumen de agua derramada (regresión) y su causa probable (clasificación). Mediante la optimización automática con Optuna, el modelo logra un rendimiento prometedor, demostrando el potencial de los enfoques multitarea en contextos industriales complejos. A continuación se presentan los resultados finales más importantes.</p>
+        <ul>
+            <li><strong>Coeficiente R² (Volumen):</strong> 0.347</li>
+            <li><strong>Precisión (Causa):</strong> 49.8%</li>
+            <li><strong>Error Absoluto Medio:</strong> 1.279</li>
+            <li><strong>Error Cuadrático Medio:</strong> 2.764</li>
+        </ul>
+    </section>
 
-         	   <h2 class="section-title text-3xl font-bold mb-6 pb-2 border-b-2 border-slate-200">8. Aplicación Web</h2>
-         	   <p class="section-content mb-4 text-lg">
-                Se desarrolló una aplicación web interactiva que permite cargar datos y predecir en tiempo real tanto el volumen estimado de agua derramada como su causa probable. Esta herramienta puede ser utilizada por reguladores, investigadores y operadores para monitorear riesgos y responder de forma proactiva.
-         	   </p>
-          	
-        	</section>
+    <section id="metodologia">
+        <h2>5. Metodología Interactiva</h2>
+        <p>El modelo fue construido siguiendo un flujo de trabajo automatizado que va desde el preprocesamiento de los datos hasta la optimización de la arquitectura de la red neuronal. Este enfoque asegura la reproducibilidad y facilita la mejora continua del sistema.</p>
+        <h3>5.1 Preparación de Datos</h3>
+        <ul>
+            <li><strong>Valores faltantes:</strong> imputados utilizando la mediana y marcadores de posición 'Desconocido'.</li>
+            <li><strong>Transformación logarítmica:</strong> aplicada a los volúmenes de derrame para manejar la asimetría.</li>
+            <li><strong>Codificación:</strong> variables categóricas codificadas one-hot; fechas divididas en año/mes.</li>
+            <li><strong>Escalado:</strong> características normalizadas utilizando MinMaxScaler.</li>
+        </ul>
+        <p><strong>📊 1. Preprocesamiento de Datos</strong></p>
+        <p>Se utilizó un conjunto de datos real de derrames. Las variables categóricas (operador, condado, causa, etc.) fueron transformadas con OneHotEncoder, mientras que a la variable objetivo de volumen se le aplicó una transformación logarítmica para estabilizar la varianza.</p>
+        <p><strong>🧠 2. Modelo de Red Neuronal Multitarea</strong></p>
+        <p>El núcleo del sistema es una red neuronal con capas compartidas que aprenden características comunes de los datos. El modelo se bifurca en dos salidas especializadas:</p>
+        <ul>
+            <li><strong>Salida de Regresión:</strong> Una capa densa con activación lineal para predecir el volumen del derrame.</li>
+            <li><strong>Salida de Clasificación:</strong> Una capa densa con activación Softmax para predecir la probabilidad de cada causa posible.</li>
+        </ul>
+        <p><strong>⚙️ 3. Optimización con Optuna</strong></p>
+        <p>Para encontrar la mejor configuración, se usó Optuna, un framework de optimización bayesiana que ajustó automáticamente los siguientes hiperparámetros clave para minimizar la pérdida combinada del modelo:</p>
+        <ul>
+            <li>Capas</li>
+            <li>Neuronas</li>
+            <li>Dropout</li>
+            <li>Regularización L2</li>
+            <li>Tasa de Aprendizaje</li>
+            <li>Optimizador</li>
+            <li>Tamaño de Lote</li>
+        </ul>
+    </section>
 
-       	 <!-- Section: Resultados Clave -->
-      <section id="resultados" class="mb-16">
-        <h2 class="text-3xl font-bold mb-6 border-b-2 border-slate-200">Resultados Clave</h2>
-        <p class="mb-8 text-lg">Visualización de regresión y clasificación sobre datos reales.</p>
-        <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
-          <div class="lg:col-span-3 bg-white p-4 rounded-lg shadow">
-            <h3 class="text-xl font-bold mb-2 text-center">Predicción de Volumen</h3>
-            <div class="chart-container"><canvas id="regressionChart"></canvas></div>
-          </div>
-          <div class="lg:col-span-2 bg-white p-4 rounded-lg shadow">
-            <h3 class="text-xl font-bold mb-2 text-center">Predicción de Causa</h3>
-            <div class="chart-container"><canvas id="classificationChart"></canvas></div>
-          </div>
-        </div>
-      </section>
+    <section id="experimentacion">
+        <h2>6. Experimentación y Resultados</h2>
+        <h3>6.1 Plataforma Computacional</h3>
+        <p>El desarrollo del modelo siguió un flujo de trabajo computacional estructurado. El prototipado inicial se realizó en el IDE Spyder, donde se diseñaron y probaron versiones tempranas de la red neuronal utilizando muestras pequeñas de datos y arquitecturas simplificadas. Una vez definida la arquitectura central, el proyecto migró a Google Colab para aprovechar su aceleración gratuita de GPU.</p>
+        <h3>6.2 Análisis de Rendimiento del Modelo</h3>
+        <p>Esta sección detalla el rendimiento de la red neuronal multitarea en varias métricas para la predicción del volumen de derrame (regresión) y la causa del derrame (clasificación).</p>
+        <h4>Pérdida Total</h4>
+        <table>
+            <tr><th>Época</th><th>Pérdida de Entrenamiento</th><th>Pérdida de Validación</th><th>Diferencia</th></tr>
+            <tr><td>1</td><td>62.2842</td><td>45.1358</td><td>17.1484</td></tr>
+            <tr><td>6</td><td>7.2674</td><td>4.8145</td><td>2.4529</td></tr>
+            <tr><td>11</td><td>5.6395</td><td>4.6213</td><td>1.0182</td></tr>
+            <tr><td>16</td><td>4.9681</td><td>4.6037</td><td>0.3645</td></tr>
+            <tr><td>21</td><td>4.5250</td><td>4.6631</td><td>0.1382</td></tr>
+            <tr><td>26</td><td>4.3510</td><td>4.6861</td><td>0.3352</td></tr>
+            <tr><td>27</td><td>4.2380</td><td>4.7025</td><td>0.4644</td></tr>
+        </table>
+        <p>Figura 18: Pérdida total de entrenamiento y validación por época.</p>
+        <img src="placeholder_loss_plot.png" alt="Pérdida total por época">
+        <h4>Precisión de Clasificación</h4>
+        <table>
+            <tr><th>Época</th><th>Precisión de Entrenamiento</th><th>Precisión de Validación</th><th>Diferencia</th></tr>
+            <tr><td>1</td><td>0.0726</td><td>0.0145</td><td>0.0581</td></tr>
+            <tr><td>6</td><td>0.4658</td><td>0.4939</td><td>0.0281</td></tr>
+            <tr><td>11</td><td>0.4837</td><td>0.4982</td><td>0.0145</td></tr>
+            <tr><td>16</td><td>0.4930</td><td>0.5012</td><td>0.0082</td></tr>
+            <tr><td>21</td><td>0.4988</td><td>0.4952</td><td>0.0036</td></tr>
+            <tr><td>26</td><td>0.4989</td><td>0.5024</td><td>0.0035</td></tr>
+            <tr><td>27</td><td>0.5032</td><td>0.5036</td><td>0.0005</td></tr>
+        </table>
+        <p>Figura 19: Precisión de clasificación de entrenamiento y validación por época.</p>
+        <img src="placeholder_accuracy_plot.png" alt="Precisión por época">
+        <h4>MAE de Regresión (Error Absoluto Medio)</h4>
+        <table>
+            <tr><th>Época</th><th>MAE de Entrenamiento</th><th>MAE de Validación</th><th>Diferencia</th></tr>
+            <tr><td>1</td><td>7.1658</td><td>6.0034</td><td>1.1624</td></tr>
+            <tr><td>6</td><td>1.8600</td><td>1.3799</td><td>0.4801</td></tr>
+            <tr><td>11</td><td>1.5793</td><td>1.3305</td><td>0.2488</td></tr>
+            <tr><td>16</td><td>1.4395</td><td>1.3250</td><td>0.1146</td></tr>
+            <tr><td>21</td><td>1.3427</td><td>1.3326</td><td>0.0102</td></tr>
+            <tr><td>26</td><td>1.3003</td><td>1.3313</td><td>0.0310</td></tr>
+            <tr><td>27</td><td>1.2843</td><td>1.3365</td><td>0.0522</td></tr>
+        </table>
+        <p>Figura 20: MAE de regresión de entrenamiento y validación por época.</p>
+        <img src="placeholder_mae_plot.png" alt="MAE por época">
+        <h4>MSE de Regresión (Error Cuadrático Medio)</h4>
+        <table>
+            <tr><th>Época</th><th>MSE de Entrenamiento</th><th>MSE de Validación</th><th>Diferencia</th></tr>
+            <tr><td>1</td><td>106.2713</td><td>89.1004</td><td>17.1709</td></tr>
+            <tr><td>6</td><td>7.8123</td><td>5.7045</td><td>2.1078</td></tr>
+            <tr><td>11</td><td>6.4232</td><td>5.2283</td><td>1.1949</td></tr>
+            <tr><td>16</td><td>5.5246</td><td>5.1487</td><td>0.3759</td></tr>
+            <tr><td>21</td><td>5.1062</td><td>5.1610</td><td>0.0548</td></tr>
+            <tr><td>26</td><td>4.9517</td><td>5.1889</td><td>0.2372</td></tr>
+            <tr><td>27</td><td>4.8493</td><td>5.2098</td><td>0.3605</td></tr>
+        </table>
+    </section>
 
-      <!-- Sección: Rendimiento -->
-      <section id="performance" class="mb-16">
-        <h2 class="text-3xl font-bold mb-6 border-b-2 border-slate-200">Explorador de Rendimiento</h2>
-        <p class="mb-6 text-lg">Explora cómo evolucionaron las métricas a lo largo de las épocas de entrenamiento.</p>
-        <div class="bg-white p-4 rounded-lg shadow">
-          <div class="flex flex-wrap justify-center gap-2 mb-4">
-            <button onclick="updatePerformanceChart('loss')" class="bg-blue-500 text-white py-2 px-4 rounded-md">Pérdida Total</button>
-            <button onclick="updatePerformanceChart('accuracy')" class="bg-slate-200 text-slate-700 py-2 px-4 rounded-md">Precisión</button>
-            <button onclick="updatePerformanceChart('mae')" class="bg-slate-200 text-slate-700 py-2 px-4 rounded-md">MAE</button>
-          </div>
-          <div class="chart-container"><canvas id="performanceChart"></canvas></div>
-        </div>
-      </section>
+    <section id="resultados">
+        <h2>Resultados Clave</h2>
+        <p>Visualización de regresión y clasificación sobre datos reales.</p>
+        <h3>Predicción de Volumen</h3>
+        <p>El modelo predice el volumen de agua derramada con un R² de 0.347 y un MAE de 1.279, indicando una capacidad moderada para capturar la variabilidad en los volúmenes de derrame.</p>
+        <h3>Predicción de Causa</h3>
+        <p>La precisión de clasificación alcanzó el 49.8%, con las causas más comunes identificadas como fallos mecánicos y corrosión.</p>
+    </section>
 
-        <!-- Section: Conclusiones -->
-        <section id="conclusion" class="mb-16">
-            <h2 class="section-title text-3xl font-bold mb-6 pb-2 border-b-2 border-slate-200">9. Conclusiones</h2>
-            <p class="section-content mb-4 text-lg">
-                Este proyecto demuestra el potencial de la inteligencia artificial para abordar problemas ambientales complejos. El modelo multitarea logró resultados competitivos en la predicción de variables clave, y su integración con una interfaz web proporciona un sistema práctico para usuarios no técnicos.
-            </p>
-            <p class="section-content mb-4 text-lg">
-                Como futuras mejoras, se plantea incrementar el volumen de datos, refinar el tratamiento de valores atípicos y explorar arquitecturas más sofisticadas como redes recurrentes o transformers para aprovechar patrones temporales más complejos.
-            </p>
-        </section>
+    <section id="rendimiento">
+        <h2>Explorador de Rendimiento</h2>
+        <p>Explora cómo evolucionaron las métricas a lo largo de las épocas de entrenamiento.</p>
+        <ul>
+            <li><strong>Pérdida Total:</strong> La pérdida total disminuyó significativamente en las primeras épocas, estabilizándose alrededor de 4.2-4.7.</li>
+            <li><strong>Precisión:</strong> La precisión de clasificación mejoró hasta alcanzar un máximo de 0.5297 en la época 31.</li>
+            <li><strong>MAE:</strong> El MAE de regresión se redujo a 1.2843 en entrenamiento y 1.3365 en validación en la época 27.</li>
+        </ul>
+        <h3>Análisis de Datos</h3>
+        <p>El análisis de datos reveló patrones significativos:</p>
+        <ul>
+            <li><strong>Causas principales de derrames:</strong></li>
+            <table>
+                <tr><th>Causa</th><th>Conteo</th><th>Volumen de Petróleo Derramado (barriles)</th><th>Volumen de Agua Producida Derramada (barriles)</th></tr>
+                <tr><td>CORROSION</td><td>259</td><td>-</td><td>-</td></tr>
+                <tr><td>MECHANICAL FAILURE</td><td>183</td><td>-</td><td>-</td></tr>
+                <tr><td>WEATHER</td><td>47</td><td>-</td><td>-</td></tr>
+                <tr><td>HUMAN ERROR</td><td>39</td><td>-</td><td>-</td></tr>
+                <tr><td>THEFT / VANDALISM</td><td>1</td><td>-</td><td>-</td></tr>
+            </table>
+            <li><strong>Análisis por operador (ejemplo: APACHE):</strong></li>
+            <table>
+                <tr><th>Métrica</th><th>Valor</th></tr>
+                <tr><td>Total derrames</td><td>287</td></tr>
+                <tr><td>Petróleo total derramado</td><td>437312.40 barriles</td></tr>
+                <tr><td>Agua producida total derramada</td><td>6307518.00 barriles</td></tr>
+            </table>
+            <li><strong>Análisis por condado (ejemplo: Andrews):</strong></li>
+            <table>
+                <tr><th>Métrica</th><th>Valor</th></tr>
+                <tr><td>Total derrames</td><td>529</td></tr>
+                <tr><td>Petróleo total derramado</td><td>365615.21 barriles</td></tr>
+                <tr><td>Agua producida total derramada</td><td>6746821.12 barriles</td></tr>
+            </table>
+        </ul>
+        <h3>Visualizaciones</h3>
+        <p>Se generaron varias visualizaciones para explorar los datos:</p>
+        <ul>
+            <li><strong>Derrames por mes:</strong> Gráfico de líneas mostrando la tendencia mensual de derrames.</li>
+            <li><strong>Relación petróleo vs agua:</strong> Gráfico de dispersión logarítmico.</li>
+            <li><strong>Derrames en agua vs tierra:</strong> Gráfico de barras.</li>
+            <li><strong>Gráfico 3D:</strong> Visualización de derrames por año, mes y volumen logarítmico.</li>
+        </ul>
+    </section>
 
-        </main>
-    </div>
+    <section id="discusion">
+        <h2>7. Discusión</h2>
+        <p>A pesar de las limitaciones en la precisión de las predicciones, los resultados muestran una clara tendencia hacia la mejora del modelo con el aumento de datos y la optimización. El desempeño de la regresión (R² ≈ 0.35) y clasificación (≈ 50%) sugiere que el enfoque multitarea puede capturar patrones útiles incluso en conjuntos de datos con ruido e incertidumbre.</p>
+        <p>Se identificaron operadores y condados con altas tasas de derrames, lo que puede guiar intervenciones regulatorias. Además, la causa más común de los derrames fue el fallo de equipos, destacando la necesidad de mantenimiento preventivo en infraestructura.</p>
+    </section>
 
-        <!-- Script Chart.js -->
-        <script defer>
-            const lossData = {
-            labels: [1, 6, 11, 16, 21, 26, 27],
-            datasets: [
-                {
-                label: 'Pérdida de Entrenamiento',
-                data: [62.2842, 7.2674, 5.6395, 4.9681, 4.5250, 4.3510, 4.2380],
-                borderColor: '#3b82f6', fill: false, tension: 0.3
-                },
-                {
-                label: 'Pérdida de Validación',
-                data: [45.1358, 4.8145, 4.6213, 4.6037, 4.6631, 4.6861, 4.7025],
-                borderColor: '#f59e0b', fill: false, tension: 0.3
-                }
-            ]
-            };
+    <section id="predicciones">
+        <h2>Predicciones</h2>
+        <p>El modelo predice tanto el volumen de agua derramada como la causa probable. Ejemplo de predicciones:</p>
+        <table>
+            <tr><th>PREDICTED_LOG_WATER</th><th>OBSERVED_LOG_WATER</th><th>L1_LOSS_WATER</th><th>PREDICTED_CAUSE</th></tr>
+            <tr><td>9.30</td><td>8.34</td><td>0.96</td><td>CORROSION</td></tr>
+            <tr><td>8.25</td><td>6.73</td><td>1.52</td><td>MECHANICAL FAILURE</td></tr>
+            <tr><td>7.31</td><td>4.44</td><td>2.86</td><td>MECHANICAL FAILURE</td></tr>
+            <tr><td>8.54</td><td>6.66</td><td>0.16</td><td>MECHANICAL FAILURE</td></tr>
+            <tr><td>7.49</td><td>9.04</td><td>1.56</td><td>MECHANICAL FAILURE</td></tr>
+        </table>
+    </section>
 
-            const accuracyData = {
-            labels: [1, 6, 11, 16, 21, 26, 27],
-            datasets: [{
-                label: 'Precisión Validación',
-                data: [0.0145, 0.4939, 0.4982, 0.5012, 0.4952, 0.5024, 0.5036],
-                borderColor: '#10b981', fill: false, tension: 0.3
-            }]
-            };
+    <section id="aplicacion">
+        <h2>8. Aplicación Web</h2>
+        <p>Se desarrolló una aplicación web interactiva que permite cargar datos y predecir en tiempo real tanto el volumen estimado de agua derramada como su causa probable. Esta herramienta puede ser utilizada por reguladores, investigadores y operadores para monitorear riesgos y responder de forma proactiva.</p>
+        <h3>Interfaz de Predicciones</h3>
+        <p>La aplicación incluye dropdowns para seleccionar valores de entrada (año, mes, operador, condado, tipo de operación, fuente) y un botón para ejecutar predicciones. Ejemplo de uso:</p>
+        <pre>
+# Ejemplo de código para la interfaz de predicciones
+import pandas as pd
+import numpy as np
+import tensorflow as tf
+import joblib
+import os
+from IPython.display import display
+import ipywidgets as widgets
+from tensorflow.keras.models import load_model
+from tensorflow.keras.metrics import MeanSquaredError
 
-            const maeData = {
-            labels: [1, 6, 11, 16, 21, 26, 27],
-            datasets: [{
-                label: 'MAE Validación',
-                data: [6.0034, 1.3799, 1.3305, 1.3250, 1.3326, 1.3313, 1.3365],
-                borderColor: '#ef4444', fill: false, tension: 0.3
-            }]
-            };
+def format_currency(x):
+    return "{:.2f}".format(x)
 
-            const chartConfigs = {
-            loss: lossData,
-            accuracy: accuracyData,
-            mae: maeData
-            };
+def predict_outcomes(model, df, features, le_causa, preprocessor, batch_size=1):
+    batch = df.copy()
+    batch.set_index(np.arange(len(batch)), inplace=True)
+    X_batch = preprocessor.transform(batch[features])
+    predictions = model.predict(X_batch, verbose=0)
+    y_reg_pred = predictions[0].flatten()
+    y_clf_pred = np.argmax(predictions[1], axis=1)
+    data = {
+        "PREDICTED_WATER": [format_currency(np.expm1(y)) for y in y_reg_pred],
+        "PREDICTED_CAUSE": [le_causa.inverse_transform([y])[0] for y in y_clf_pred]
+    }
+    return pd.DataFrame(data)
 
-            let performanceChart;
-            function updatePerformanceChart(metric) {
-            const ctx = document.getElementById('performanceChart').getContext('2d');
-            if (performanceChart) performanceChart.destroy();
-            performanceChart = new Chart(ctx, {
-                type: 'line',
-                data: chartConfigs[metric],
-                options: {
-                responsive: true,
-                plugins: {
-                    legend: { position: 'top' },
-                    title: { display: true, text: `Evolución de ${metric.toUpperCase()}` }
-                }
-                }
-            });
+def show_predictions(output):
+    header = "\n" + "="*50 + "\n" + "| " + "PREDICCIONES".center(48) + " |\n" + "="*50
+    print(header)
+    for _, row in output.iterrows():
+        print(f"Cantidad Derramada: {row['PREDICTED_WATER']} barriles")
+        print(f"Causa Probable: {row['PREDICTED_CAUSE']}")
+
+def load_required_files():
+    try:
+        required_files = ["spill_data_cleaned.csv", "modelo_trained.h5", "preprocessor.pkl", "labelencoder_causa.pkl"]
+        missing_files = [f for f in required_files if not os.path.exists(f)]
+        if missing_files:
+            print(f"Archivos faltantes: {missing_files}")
+            return None, None, None, None
+        model = load_model("modelo_trained.h5", custom_objects={"mse": MeanSquaredError()})
+        preprocessor = joblib.load("preprocessor.pkl")
+        le_causa = joblib.load("labelencoder_causa.pkl")
+        df = pd.read_csv("spill_data_cleaned.csv", sep=",", encoding="latin-1")
+        return model, preprocessor, le_causa, df
+    except Exception as e:
+        print(f"Error cargando archivos: {e}")
+        return None, None, None, None
+
+def get_unique_values(df, column):
+    unique_values = df[column].astype(str).str.strip().unique()
+    return sorted([x for x in unique_values if str(x).lower() != 'nan'])
+
+def create_dropdowns(df, model, preprocessor, le_causa):
+    features = ['year', 'month', 'operator_edit', 'county_edit', 'type_operation', 'source']
+    year_dropdown = widgets.Dropdown(options=get_unique_values(df, 'year'), description='Año:')
+    month_dropdown = widgets.Dropdown(options=get_unique_values(df, 'month'), description='Mes:')
+    operator_dropdown = widgets.Dropdown(options=get_unique_values(df, 'operator_edit'), description='Operador:')
+    county_dropdown = widgets.Dropdown(options=get_unique_values(df, 'county_edit'), description='Condado:')
+    type_operation_dropdown = widgets.Dropdown(options=get_unique_values(df, 'type_operation'), description='Operación:')
+    source_dropdown = widgets.Dropdown(options=get_unique_values(df, 'source'), description='Fuente:')
+    predict_button = widgets.Button(description="Hacer Predicción", button_style='success', tooltip='Click para hacer predicción')
+    output = widgets.Output()
+
+    def on_predict_button_clicked(b):
+        with output:
+            output.clear_output()
+            if model is None or preprocessor is None or le_causa is None:
+                print("Error: Modelo, preprocesador o codificador de etiquetas no cargados")
+                return
+            input_data = {
+                'year': [year_dropdown.value],
+                'month': [month_dropdown.value],
+                'operator_edit': [operator_dropdown.value],
+                'county_edit': [county_dropdown.value],
+                'type_operation': [type_operation_dropdown.value],
+                'source': [source_dropdown.value]
             }
+            input_df = pd.DataFrame(input_data)
+            try:
+                pred_df = predict_outcomes(model, input_df, features, le_causa, preprocessor, batch_size=1)
+                show_predictions(pred_df)
+            except Exception as e:
+                print(f"Error al hacer predicción: {e}")
 
-            // Gráficas de Resultados Clave
-            new Chart(document.getElementById('regressionChart'), {
-            type: 'scatter',
-            data: {
-                datasets: [{
-                label: 'Volumen Real vs Predicho',
-                data: [
-                    {x: 1.1, y: 1.2}, {x: 2.0, y: 2.1}, {x: 3.5, y: 3.4},
-                    {x: 4.0, y: 4.1}, {x: 5.0, y: 5.3}
-                ],
-                backgroundColor: '#3b82f6'
-                }]
-            },
-            options: {
-                scales: {
-                x: { title: { display: true, text: 'Volumen Real' } },
-                y: { title: { display: true, text: 'Volumen Predicho' } }
-                }
-            }
-            });
+    predict_button.on_click(on_predict_button_clicked)
+    display(widgets.VBox([year_dropdown, month_dropdown, operator_dropdown, county_dropdown, type_operation_dropdown, source_dropdown, predict_button, output]))
 
-            new Chart(document.getElementById('classificationChart'), {
-            type: 'doughnut',
-            data: {
-                labels: ['Corrosión', 'Mecánico', 'Desconocido'],
-                datasets: [{
-                label: 'Distribución de Causas',
-                data: [45, 30, 25],
-                backgroundColor: ['#3b82f6', '#f59e0b', '#10b981']
-                }]
-            },
-            options: {
-                plugins: {
-                legend: { position: 'bottom' }
-                }
-            }
-            });
-        </script>
-    
+def main():
+    print("Iniciando script de predicción con dropdowns...")
+    model, preprocessor, le_causa, df = load_required_files()
+    if model is None or preprocessor is None or le_causa is None or df is None:
+        print("No se pudieron cargar los archivos necesarios. Terminando ejecución.")
+        return
+    print("Archivos cargados correctamente. Selecciona los valores para la predicción.")
+    create_dropdowns(df, model, preprocessor, le_causa)
 
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
-    <script>
-        let model; // variable global
+if __name__ == "__main__":
+    main()
+        </pre>
+    </section>
 
-        // Function to load the model
-        async function loadModel() {
-            try {
-                // Adjust the path to the model file based on the location of your HTML file
-                model = await tf.loadLayersModel('docs/web_model/model.json');
-                console.log("✅ Modelo cargado correctamente");
-            } catch (error) {
-                console.error("❌ Error al cargar el modelo:", error);
-                alert("No se pudo cargar el modelo. Revisa la consola para más detalles.");
-            }
-        }
+    <section id="conclusiones">
+        <h2>9. Conclusiones</h2>
+        <p>Este proyecto demuestra el potencial de la inteligencia artificial para abordar problemas ambientales complejos. El modelo multitarea logró resultados competitivos en la predicción de variables clave, y su integración con una interfaz web proporciona un sistema práctico para usuarios no técnicos.</p>
+        <p>Como futuras mejoras, se plantea incrementar el volumen de datos, refinar el tratamiento de valores atípicos y explorar arquitecturas más sofisticadas como redes recurrentes o transformers para aprovechar patrones temporales más complejos.</p>
+    </section>
 
-        // Preprocess input
-        function preprocess(year, month, operator, county, type_operation, source) {
-            return tf.tensor2d([[year, month, operator, county, type_operation, source]]);
-        }
+    <section id="codigo">
+        <h2>10. Código y Detalles Técnicos</h2>
+        <h3>10.1 Instalación de Optuna</h3>
+        <pre>
+pip install optuna
+# Salida: Requirement already satisfied: optuna in /usr/local/lib/python3.11/dist-packages (4.4.0)
+# Requirement already satisfied: alembic>=1.5.0 in /usr/local/lib/python3.11/dist-packages (from optuna) (1.16.4)
+# Requirement already satisfied: colorlog in /usr/local/lib/python3.11/dist-packages (from optuna)...
+        </pre>
+        <p>El comando ejecuta la instalación de la librería Optuna, una herramienta de optimización de hiperparámetros para modelos de aprendizaje automático. Se utiliza desde la línea de comandos en un entorno con Python y pip instalados.</p>
 
-        // Execute after the DOM loads
-        document.addEventListener("DOMContentLoaded", () => {
-            loadModel(); // Load model at the start
+        <h3>10.2 Configuración del Entorno</h3>
+        <pre>
+import pandas as pd
+import numpy as np
+import json
+import os
+import optuna
+import matplotlib.pyplot as plt
+import tensorflow as tf
+import warnings
+import base64
+import requests
+import re
+import joblib
+from datetime import datetime
+from sklearn.model_selection import train_test_split
+from tensorflow.keras.optimizers import Adam, RMSprop, SGD
+from tensorflow.keras.regularizers import l2
+import seaborn as sns
+import plotly.express as px
+import plotly.graph_objects as go
+        </pre>
+        <p>Este código importa las librerías necesarias para el modelado, incluyendo pandas para manipulación de datos, numpy para cálculos numéricos, tensorflow para redes neuronales, y optuna para optimización de hiperparámetros.</p>
 
-            // Listen to form submission event
-            document.getElementById("predictionForm").addEventListener("submit", async function(e) {
-                e.preventDefault();
-                try {
-                    if (!model) {
-                        alert("El modelo aún no ha sido cargado.");
-                        return;
-                    }
-                    const year = parseInt(document.getElementById("year").value);
-                    const month = parseInt(document.getElementById("month").value);
-                    const operator = parseInt(document.getElementById("operator").value);
-                    const county = parseInt(document.getElementById("county").value);
-                    const type_operation = parseInt(document.getElementById("type_operation").value);
-                    const source = parseInt(document.getElementById("source").value);
+        <h3>10.3 Preprocesamiento de Datos</h3>
+        <pre>
+df = pd.read_csv("spill_data_cleaned.csv", sep=';', encoding='latin-1')
+df = df.dropna(subset=['release_prod_water_edit'])
+df['log_release_prod_water_edit'] = np.log10(df['release_prod_water_edit'])
+cat_cols = ['operator_edit', 'county_edit', 'type_operation', 'source', 'probable_cause_edit']
+for col in cat_cols:
+    df[col] = df[col].fillna('unknown').astype(str).str.lower()
+df['date'] = pd.to_datetime(df['date_of_spill_edit'])
+df['month'] = df['date'].dt.month
+df['year'] = df['date'].dt.year
+df.drop(columns=['date'], inplace=True)
+y_reg = df['log_release_prod_water_edit']
+y_clf = df['probable_cause_edit']
+X = df[['year', 'month', 'operator_edit', 'county_edit', 'type_operation', 'source']]
+num_features = X.select_dtypes(include=['int64', 'float64']).columns.tolist()
+cat_features = X.select_dtypes(include=['object']).columns.tolist()
+preprocessor = ColumnTransformer(transformers=[
+    ('num', StandardScaler(), num_features),
+    ('cat', OneHotEncoder(handle_unknown='ignore'), cat_features)
+])
+X_processed = preprocessor.fit_transform(X)
+        </pre>
+        <p>Este código carga el conjunto de datos, elimina valores nulos, aplica transformación logarítmica a los volúmenes de agua derramada, codifica variables categóricas y normaliza las características numéricas.</p>
 
-                    const inputTensor = preprocess(year, month, operator, county, type_operation, source);
-                    const prediction = model.predict(inputTensor);
-                    const result = await prediction.data();
-                    const output = document.getElementById("predictionOutput");
-                    output.innerText = `${result[0].toFixed(2)} galones`;
-                    document.getElementById("result").classList.remove("hidden");
-                } catch (error) {
-                    console.error("❌ Error durante la predicción:", error);
-                    alert("Hubo un problema al predecir. Revisa la consola para más detalles.");
-                }
-            });
-        });
-    </script>
+        <h3>10.4 Generación de Gráficos</h3>
+        <pre>
+def make_plots(df, feature_names, label_name, model_output, sample_size=200):
+    random_sample = df.sample(n=sample_size).copy()
+    random_sample.reset_index(drop=True, inplace=True)
+    weights, bias, epochs, metrics = model_output
+    is_2d_plot = len(feature_names) == 1
+    # Código para generar gráficos 2D/3D con Plotly
+def plot_data(df, features, label, fig):
+    if len(features) == 1:
+        scatter = px.scatter(df, x=features[0], y=label, color=df['probable_cause_edit'])
+    else:
+        scatter = px.scatter_3d(df, x=features[0], y=features[1], z=label, color=df['probable_cause_edit'])
+    fig.add_trace(scatter.data[0], row=1, col=2)
+    if len(features) == 1:
+        fig.update_xaxes(title_text=features[0], row=1, col=2)
+        fig.update_yaxes(title_text=label, row=1, col=2)
+    else:
+        fig.update_layout(scene=dict(
+            xaxis_title=features[0],
+            yaxis_title=features[1],
+            zaxis_title=label
+        ))
+def plot_model(df, features, weights, bias, fig):
+    df['REG_PREDICTED'] = bias[0]
+    for index, feature in enumerate(features):
+        df['REG_PREDICTED'] += df[feature] * weights[index][0]
+    # Código para graficar predicciones
+def plot_loss_curve(epochs, metric, fig):
+    fig.add_trace(go.Scatter(x=epochs, y=metric, mode='lines', name='Loss'))
+    fig.update_yaxes(title_text="Classification Accuracy", row=1, col=1, range=[metric.min()*0.8, metric.max()])
+        </pre>
+        <p>Estas funciones generan visualizaciones 2D y 3D de los datos y las predicciones del modelo utilizando Plotly.</p>
 
+        <h3>10.5 Optimización con Optuna</h3>
+        <pre>
+def objective(trial):
+    n_layers = trial.suggest_int("n_layers", 2, 4)
+    dropout_rate = trial.suggest_float("dropout_rate", 0.1, 0.5)
+    l2_reg = trial.suggest_float("l2_reg", 1e-6, 1e-2, log=True)
+    learning_rate = trial.suggest_float('learning_rate', 1e-5, 1e-2, log=True)
+    optimizer_name = trial.suggest_categorical('optimizer', ['adam', 'rmsprop'])
+    batch_size = trial.suggest_categorical('batch_size', [32, 64, 128])
+    use_batch_norm = trial.suggest_categorical('use_batch_norm', [True, False])
+    input_layer = Input(shape=(input_dim,))
+    x = input_layer
+    for i in range(n_layers):
+        x = Dense(trial.suggest_int(f'units_{i}', 16, 128))(x)
+        if use_batch_norm:
+            x = BatchNormalization()(x)
+        x = Dropout(dropout_rate)(x)
+    regression_output = Dense(1, name='regression')(x)
+    classification_output = Dense(num_classes, activation='softmax', name='classification')(x)
+    model = Model(inputs=input_layer, outputs=[regression_output, classification_output])
+    if optimizer_name == 'adam':
+        optimizer = Adam(learning_rate=learning_rate)
+    else:
+        optimizer = RMSprop(learning_rate=learning_rate)
+    model.compile(
+        optimizer=optimizer,
+        loss={'regression': 'mae', 'classification': 'categorical_crossentropy'},
+        loss_weights={'regression': 0.5, 'classification': 0.5},
+        metrics={'regression': ['mae'], 'classification': ['accuracy']}
+    )
+    history = model.fit(
+        X_train_opt,
+        {'regression': y_reg_train_opt, 'classification': y_clf_train_opt},
+        validation_data=(X_val_opt, {'regression': y_reg_val_opt, 'classification': y_clf_val_opt}),
+        epochs=30,
+        batch_size=batch_size,
+        verbose=0
+    )
+    return history.history['val_loss'][-1]
+        </pre>
+        <p>Esta función define el objetivo de optimización para Optuna, ajustando hiperparámetros como el número de capas, tasa de dropout, regularización L2, y optimizador.</p>
+
+        <h3>10.6 Guardado y Carga de Parámetros</h3>
+        <pre>
+timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+best_params_data = {
+    'timestamp': timestamp,
+    'best_value': study.best_value,
+    'best_params': study.best_params,
+    'n_trials': len(study.trials),
+    'optimization_complete': True
+}
+filename = f'best_params_{timestamp}.json'
+with open(filename, 'w') as f:
+    json.dump(best_params_data, f, indent=2)
+print(f"Optimización completada! Mejores parámetros guardados en: {filename}")
+
+def load_best_params_from_json(json_filename):
+    if not os.path.exists(json_filename):
+        raise FileNotFoundError(f"El archivo {json_filename} no existe")
+    with open(json_filename, 'r') as f:
+        data = json.load(f)
+    print(f"Archivo: {json_filename}, Timestamp: {data['timestamp']}, Mejor pérdida: {data['best_value']:.4f}")
+    return data['best_params']
+
+def load_and_compare_all_params(json_files):
+    if not json_files:
+        print("No se encontraron archivos de parámetros")
+        return None, None
+    best_score = -float('inf')
+    best_params = None
+    best_file = None
+    for filename in json_files:
+        try:
+            with open(filename, 'r') as f:
+                data = json.load(f)
+            if 'metrics' in data and isinstance(data['metrics'], dict):
+                r2 = data['metrics'].get('r2', 0)
+                accuracy = data['metrics'].get('accuracy', 0)
+                if isinstance(r2, (int, float)) and isinstance(accuracy, (int, float)):
+                    score = r2 * 0.6 + accuracy * 0.4
+                    score_source = f'metrics (R2: {r2:.3f}, Acc: {accuracy:.3f})'
+            elif 'best_value' in data and isinstance(data['best_value'], (int, float)):
+                score = -data['best_value']
+                score_source = f"Optuna best_value ({data['best_value']})"
+            else:
+                score = os.path.getmtime(filename)
+                score_source = "timestamp (fallback)"
+            print(f"{filename}: score {score:.4f} ({score_source})")
+            if score > best_score:
+                best_score = score
+                best_params = data.get('best_params', data)
+                best_file = filename
+        except Exception as e:
+            print(f"Error cargando {filename}: {e}")
+    if best_file:
+        print(f"Mejor archivo seleccionado: {best_file} (score: {best_score:.4f})")
+        return best_file, best_params
+    return None, None
+        </pre>
+        <p>Estas funciones guardan y comparan los mejores parámetros encontrados por Optuna, seleccionando el mejor modelo basado en métricas o fecha de modificación.</p>
+
+        <h3>10.7 Modelo Final y Evaluación</h3>
+        <pre>
+def build_model_from_params(best_params, input_dim, num_classes):
+    n_layers = best_params.get('n_layers', 2)
+    dropout_rate = best_params.get('dropout_rate', 0.2)
+    l2_reg = best_params.get('l2_reg', 1e-4)
+    learning_rate = best_params.get('learning_rate', 1e-3)
+    optimizer_name = best_params.get('optimizer', 'adam')
+    input_layer = Input(shape=(input_dim,))
+    x = input_layer
+    for i in range(n_layers):
+        x = Dense(best_params.get(f'units_{i}', 64), kernel_regularizer=l2(l2_reg))(x)
+        x = Dropout(dropout_rate)(x)
+    regression_output = Dense(1, name='regression')(x)
+    classification_output = Dense(num_classes, activation='softmax', name='classification')(x)
+    model = Model(inputs=input_layer, outputs=[regression_output, classification_output])
+    if optimizer_name == 'adam':
+        optimizer = Adam(learning_rate=learning_rate)
+    else:
+        optimizer = RMSprop(learning_rate=learning_rate)
+    model.compile(
+        optimizer=optimizer,
+        loss={'regression': 'mse', 'classification': 'categorical_crossentropy'},
+        metrics={'regression': ['mae'], 'classification': ['accuracy']}
+    )
+    return model
+
+model.save("modelo_trained.h5")
+joblib.dump(preprocessor, "preprocessor.pkl")
+print("Modelo guardado en modelo_trained.h5")
+print("Preprocesor guardado en preprocessor.pkl")
+
+test_results = model.evaluate(X_test, {'regression': y_reg_test, 'classification': y_clf_test}, verbose=0)
+print(f"Resultados en test: R2: {r2:.4f}, MSE: {mse:.4f}, MAE: {mae:.4f}, Accuracy: {accuracy:.4f}")
+        </pre>
+        <p>Este código construye el modelo final con los mejores parámetros, lo guarda en disco y evalúa su rendimiento en el conjunto de prueba.</p>
+
+        <h3>10.8 Visualización Adicional</h3>
+        <pre>
+plt.figure(figsize=(15, 10))
+plt.subplot(2, 2, 1)
+monthly_spills = df.groupby('month').size()
+monthly_spills.plot(kind='bar')
+plt.title('Derrames por mes')
+plt.subplot(2, 2, 2)
+plt.scatter(np.log10(df['release_crude_oil_edit']), np.log10(df['release_prod_water_edit']), alpha=0.6)
+plt.title('Relación entre petróleo y agua producida derramada')
+plt.xlabel('Petróleo derramado (barriles) - escala log')
+plt.ylabel('Agua producida derramada (barriles) - escala log')
+plt.subplot(2, 2, 4)
+water_spills = df['spill_on_water_edit'].value_counts()
+water_spills.plot(kind='bar', color=['salmon', 'lightgreen'])
+plt.title('Derrames en agua vs tierra')
+plt.xticks([0, 1], ['Tierra', 'Agua'], rotation=0)
+plt.tight_layout()
+plt.show()
+
+plt.figure(figsize=(12, 6))
+monthly_trend = df.resample('M', on='date_of_spill_edit').agg({
+    'release_crude_oil_edit': 'sum',
+    'release_prod_water_edit': 'sum'
+})
+monthly_trend.plot()
+plt.title('Tendencia mensual de derrames (2013-2022)')
+plt.ylabel('Volumen derramado (barriles)')
+plt.xlabel('Fecha')
+plt.grid(True)
+plt.show()
+        </pre>
+        <p>Estas visualizaciones muestran la distribución de derrames por mes, la relación entre volúmenes de petróleo y agua derramada, y la tendencia temporal de los derrames.</p>
+    </section>
 </body>
 </html>

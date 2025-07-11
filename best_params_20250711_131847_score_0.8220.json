@@ -1,0 +1,17 @@
+{
+    "timestamp": "2025-07-11T13:18:47.301781",
+    "metrics": {
+        "r2": 0.85,
+        "mse": 0.25,
+        "mae": 0.15,
+        "accuracy": 0.78
+    },
+    "model_params": {},
+    "training_epochs": 93,
+    "dataset_info": {
+        "train_samples": 8260,
+        "test_samples": 2066,
+        "features": 1284,
+        "classes": 24
+    }
+}
